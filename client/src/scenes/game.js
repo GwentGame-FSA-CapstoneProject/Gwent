@@ -9,6 +9,7 @@ export default class Game extends Phaser.Scene {
 
     preload() {
         this.load.image('albrich', 'src/assets/albrich.png');
+        this.load.image('board','src/assets/board.jpg')
     }
 
     create() {
@@ -18,6 +19,7 @@ export default class Game extends Phaser.Scene {
         	console.log('Connected!');
         });
 
+        this.board = this.add.image(640,390 , 'board')
 		this.card = this.add.image(300, 300, 'albrich').setScale(0.3, 0.3).setInteractive();
         this.input.setDraggable(this.card);
 
