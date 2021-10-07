@@ -8,7 +8,7 @@ export default class Game extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('albrich', 'src/assets/Albrich.png');
+        this.load.image('albrich', 'src/assets/albrich.png');
     }
 
     create() {
@@ -27,8 +27,8 @@ export default class Game extends Phaser.Scene {
             gameObject.y = dragY;
         })
     }
-    
+
     update() {
-    
+
     }
 }
