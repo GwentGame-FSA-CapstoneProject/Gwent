@@ -1,20 +1,15 @@
-const PORT = process.env.PORT || 8080;
-const app = require('./app');
-const socket = require('socket.io');
+const server = require('express')();
+const http = require('http').createServer(server);
+const io = require('socket.io')(http);
 
-const init = async () => {
-  try {
-    // start listening (and create a 'server' object representing our server)
-    const server = app.listen(PORT, () =>
-      console.log(`Setting up shop on port ${PORT}`)
-    );
+io.on('connection', function (socket) {
+    console.log('A user connected: ' + socket.id);
 
-    // start socket connections
-  //   const io = socket(server);
-  //   require('./socket')(io);
-  } catch (ex) {
-    console.log(ex);
-  }
-};
+    socket.on('disconnect', function () {
+        console.log('A user disconnected: ' + socket.id);
+    });
+});
 
-init();
+http.listen(3000, function () {
+    console.log('Server started!');
+});
