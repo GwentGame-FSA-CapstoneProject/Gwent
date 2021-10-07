@@ -1,6 +1,14 @@
 const server = require('express')();
 const http = require('http').createServer(server);
-const io = require('socket.io')(http);
+const cors = require('cors');
+
+const io = require('socket.io')(http, {
+    cors: {
+        methods: ['GET', 'POST']
+    }
+});
+
+server.use(cors());
 
 io.on('connection', function (socket) {
     console.log('A user connected: ' + socket.id);
