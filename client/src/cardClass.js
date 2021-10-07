@@ -15,8 +15,11 @@ const card1 = new Card(
   "Close",
   "../assets/bovine_defense_force.png"
 );
+
 const card2 = new Card("Albrich", 2, "Unit", "Range", "../assets/albrich.png");
+
 const card3 = new Card("Cow", 0, "Unit", "Range", "../assets/cow.png");
+
 const card4 = new Card(
   "Dandelion",
   2,
@@ -24,6 +27,7 @@ const card4 = new Card(
   "Close",
   "../assets/dandelion.png"
 );
+
 const card5 = new Card(
   "Emiel Regis",
   5,
@@ -31,6 +35,7 @@ const card5 = new Card(
   "Close",
   "../assets/emiel_regis.png"
 );
+
 const card6 = new Card(
   "Gaunt O'Dimm",
   2,
@@ -38,12 +43,14 @@ const card6 = new Card(
   "Siege",
   "../assets/gaunt_odimm.png"
 );
+
 const card7 = new Card(
   "Gaunt O'Dimm: Darkness",
   4,
   "Range",
   "../assets/gaunter_odimm_darkness.png"
 );
+
 const card8 = new Card(
   "Botchling",
   4,
@@ -51,7 +58,9 @@ const card8 = new Card(
   "Close",
   "../assets/botchling.png"
 );
+
 const card9 = new Card("Vesemir", 6, "Unit", "Close", "../assets/vesemir.png");
+
 const card10 = new Card(
   "Zoltan Chivay",
   5,
