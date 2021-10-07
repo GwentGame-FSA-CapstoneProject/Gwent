@@ -3,7 +3,8 @@ class Card {
     (this.name = name),
       (this.strength = strength),
       (this.type = type),
-      (this.row = row((this.imageUrl = imageUrl)));
+      (this.row = row),
+      (this.imageUrl = imageUrl);
   }
 }
 
