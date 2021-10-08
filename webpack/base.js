@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = {
+  entry: './client/src/index.js',
   mode: "development",
   devtool: "eval-source-map",
   module: {
@@ -26,15 +27,15 @@ module.exports = {
     ]
   },
   plugins: [
-    new CleanWebpackPlugin({
-      root: path.resolve(__dirname, "../")
-    }),
+    // new CleanWebpackPlugin({
+    //   root: path.resolve(__dirname, "./")
+    // }),
     new webpack.DefinePlugin({
       CANVAS_RENDERER: JSON.stringify(true),
       WEBGL_RENDERER: JSON.stringify(true)
     }),
     new HtmlWebpackPlugin({
-      template: "./public/index.html"
+      template: "./client/public/index.html"
     })
   ]
 };
