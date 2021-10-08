@@ -25,6 +25,7 @@
     "webpack-merge": "^4.2.2"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "morgan": "^1.10.0",
     "phaser": "^3.50.0",
@@ -32,12 +33,7 @@
     "socket.io-client": "^4.2.0"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "socket.io": "^4.2.0"
-  }
+  "license": "ISC"
 }
 
 
