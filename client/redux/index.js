@@ -4,7 +4,6 @@ import thunkMiddleware from "redux-thunk";
 
 const PLAYER1_ROUND_WIN = "PLAYER1_ROUND_WIN";
 const PLAYER2_ROUND_WIN = "PLAYER2_ROUND_WIN";
-const LOST_GAME = "LOST_GAME";
 const START_GAME = "START_GAME";
 const END_GAME = "END_GAME";
 export const startGame = () => {
@@ -27,12 +26,6 @@ export const player1WinsRound = () => {
 export const player2WinsRound = () => {
   return {
     type: PLAYER2_ROUND_WIN,
-  };
-};
-
-export const lostGame = () => {
-  return {
-    type: LOST_GAME,
   };
 };
 
@@ -62,4 +55,4 @@ const middleware = composeEnhancers(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );
 
-export default createStore(appReducer, middleware);
+export default createStore(reducer, middleware);
