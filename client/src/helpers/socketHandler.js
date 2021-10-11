@@ -52,13 +52,13 @@ export default class SocketHandler {
             let yValue
             switch (card.row) {
                 case 'Close':
-                    yValue = 350
+                    yValue = 550
                   break;
                 case 'Range':
                     yValue = 450
                     break
                 case 'Siege':
-                    yValue = 550
+                    yValue = 350
                   break;
                 default:
                   console.log(`SocketHandler Switch Statment Problem`);
