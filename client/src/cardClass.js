@@ -13,7 +13,7 @@ const card1 = new Card(
   15,
   "Unit",
   "Close",
-  "../assets/bovine_defense_force.png"
+  "../../public/assets/bovine_defense_force.png"
 );
 
 const card2 = new Card("Albrich", 2, "Unit", "Range", "../assets/albrich.png");

@@ -2,7 +2,7 @@ import io from "socket.io-client";
 import Zone1 from "../helpers/dropzone1";
 import Zone2 from "../helpers/dropzone2";
 import Zone3 from "../helpers/dropzone3";
-export default class Game extends Phaser.Scene {
+export default class playGame extends Phaser.Scene {
   constructor() {
     super({
       key: "Game",
@@ -10,12 +10,12 @@ export default class Game extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("albrich", "client/src/assets/albrich.png");
-    this.load.image("board", "client/src/assets/board.jpg");
+    this.load.image("albrich", "assets/albrich.png");
+    this.load.image("board", "assets/board.jpg");
   }
 
   create() {
-    this.socket = io("http://localhost:3000");
+    this.socket = io("http://localhost:5000");
 
     this.socket.on("connect", function () {
       console.log("Connected!");

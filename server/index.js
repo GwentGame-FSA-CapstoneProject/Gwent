@@ -1,14 +1,21 @@
-const server = require('express')();
-const http = require('http').createServer(server);
+const express = require('express')
+const app = require('express')();
 const cors = require('cors');
+const path = require('path');
 
-const io = require('socket.io')(http, {
-    cors: {
-        methods: ['GET', 'POST']
-    }
+
+// static file-serving middleware
+app.use(express.static(path.join(__dirname, '..', 'dist')))
+
+app.get('*', (req, res)=> res.sendFile(path.join(__dirname, '..', 'dist/index.html')));
+
+// app.use(cors());
+
+const server = app.listen(5000, function () {
+    console.log('Server started at port 5000!');
 });
 
-server.use(cors());
+const io = require('socket.io')(server);
 
 io.on('connection', function (socket) {
     console.log('A user connected: ' + socket.id);
@@ -16,8 +23,4 @@ io.on('connection', function (socket) {
     socket.on('disconnect', function () {
         console.log('A user disconnected: ' + socket.id);
     });
-});
-
-http.listen(3000, function () {
-    console.log('Server started!');
 });
