@@ -3,9 +3,7 @@ import SocketHandler from "../helpers/socketHandler";
 import DeckHandler from "../helpers/DeckHandler";
 import InteractiveHandler from "../helpers/InteractiveHandler";
 import UIHandler from "../helpers/UIHandler";
-import Zone1 from "../helpers/dropzone1";
-import Zone2 from "../helpers/dropzone2";
-import Zone3 from "../helpers/dropzone3";
+
 export default class Game extends Phaser.Scene {
   constructor() {
     super({
@@ -31,20 +29,6 @@ export default class Game extends Phaser.Scene {
     this.UIHandler = new UIHandler(this);
     this.UIHandler.buildUI();
     this.InteractiveHandler = new InteractiveHandler(this);
-    
-
-    this.zone1 = new Zone1(this);
-    this.dropZone1 = this.zone1.renderZone();
-    this.outline1 = this.zone1.renderOutline(this.dropZone1);
-
-    this.zone2 = new Zone2(this);
-    this.dropZone2 = this.zone2.renderZone();
-    this.outline2 = this.zone2.renderOutline(this.dropZone2);
-
-    this.zone3 = new Zone3(this);
-    this.dropZone3 = this.zone3.renderZone();
-    this.outline3 = this.zone3.renderOutline(this.dropZone3);
-
   }
 
   update() {}
