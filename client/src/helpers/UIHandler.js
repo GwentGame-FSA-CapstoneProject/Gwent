@@ -3,18 +3,11 @@ import ZoneHandler from "./ZoneHandler";
 export default class UIHandler {
     constructor(scene) {
 
-        this.meleeZoneHandler = new ZoneHandler(scene);
-        this.rangedZoneHandler = new ZoneHandler(scene);
-        this.siegeZoneHandler = new ZoneHandler(scene);
+        this.ZoneHandler = new ZoneHandler(scene);
 
         this.buildZones = () => {
-
-            scene.dropZone = this.meleeZoneHandler.renderZone(660);
-            this.meleeZoneHandler.renderOutline(scene.dropZone);
-            scene.dropZone = this.rangedZoneHandler.renderZone(760);
-            this.rangedZoneHandler.renderOutline(scene.dropZone);
-            scene.dropZone = this.siegeZoneHandler.renderZone(860);
-            this.siegeZoneHandler.renderOutline(scene.dropZone);
+            scene.dropZone = this.ZoneHandler.renderZone();
+            this.ZoneHandler.renderOutline(scene.dropZone);
         }
 
         this.buildGameText = () => {

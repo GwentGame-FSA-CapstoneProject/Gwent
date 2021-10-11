@@ -1,3 +1,4 @@
+import cardsArray from '../cards/cardClass';
 export default class InteractiveHandler {
     constructor(scene){
 
@@ -36,10 +37,30 @@ export default class InteractiveHandler {
         })
 
         scene.input.on("drop", function (pointer, gameObject, dropZone) {
+            let card = {}
+            for(let i = 0 ;i<cardsArray.length;i++){
+                if(cardsArray[i].name===gameObject.texture.key){
+                     card = cardsArray[i]
+                }
+            }
+            let yValue
+            switch (card.row) {
+                case 'Close':
+                    yValue = 660
+                  break;
+                case 'Range':
+                    yValue = 760
+                    break
+                case 'Siege':
+                    yValue = 860
+                  break;
+                default:
+                  console.log(`SocketHandler Switch Statment Problem`);
+            }
             if (scene.GameHandler.isMyTurn && scene.GameHandler.gameState === 'Ready'){
-                dropZone.data.values.cards++;
-                gameObject.x = dropZone.x - 350 + dropZone.data.values.cards * 100;
-                gameObject.y = dropZone.y;
+                scene.GameHandler.playerField.push(card)
+                gameObject.x = dropZone.x - 350 + scene.GameHandler.playerField.length * 100;
+                gameObject.y = yValue;
                 scene.socket.emit('cardPlayed', gameObject.data.values.name, scene.socket.id);
             }else{
                 gameObject.x = gameObject.input.dragStartX;

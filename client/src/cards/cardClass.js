@@ -1,4 +1,4 @@
-export default class Card {
+export class Card {
   constructor(scene) {
       this.render = (x, y, type) => {
           let image = this.image;
@@ -133,3 +133,23 @@ export class ZoltonChivay extends Card {
     this.image = "zoltan"
   }
 }
+
+let cardBack = new CardBack()
+let bovineDF = new BovineDF()
+let albrich = new Albrich()
+let cow = new Cow()
+let dandelion = new Dandelion()
+let emilRegis = new EmilRegis()
+let gaunt = new Gaunt()
+let gauntDarkness = new GauntDarkness()
+let botchling = new Botchling()
+let vesemir = new Vesemir()
+let zoltonChivay = new ZoltonChivay()
+
+const cardsArray = [
+  cardBack, bovineDF, albrich, cow, dandelion,
+  emilRegis, gaunt, gauntDarkness, botchling,
+  vesemir, zoltonChivay
+]
+
+export default cardsArray
