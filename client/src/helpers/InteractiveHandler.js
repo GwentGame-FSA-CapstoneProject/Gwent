@@ -4,7 +4,7 @@ export default class InteractiveHandler {
         //card preview stuff (showing larger images w/ mroe game detail of cards you select)
 
         scene.drawCard.on('pointerdown', () => {                 //Draw card button is a production-only feature
-            scene.socket.emit('drawCard', scene.socket.id);      // to be removed later when more gameplay is functional 
+            scene.socket.emit('drawCard', scene.socket.id);      // to be removed later when more gameplay is functional
             console.log('Draw Card Pressed');
         })
 
