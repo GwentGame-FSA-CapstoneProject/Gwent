@@ -3,6 +3,7 @@ import SocketHandler from "../helpers/socketHandler";
 import DeckHandler from "../helpers/DeckHandler";
 import InteractiveHandler from "../helpers/InteractiveHandler";
 import UIHandler from "../helpers/UIHandler";
+import cardsArray from "../cards/cardClass"
 
 export default class Game extends Phaser.Scene {
   constructor() {

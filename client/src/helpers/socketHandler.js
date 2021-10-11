@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import cardsArray from '../cards/cardClass';
 
 export default class SocketHandler {
     constructor(scene){
@@ -40,10 +41,32 @@ export default class SocketHandler {
         })
 
         scene.socket.on('cardPlayed', (cardName, socketId) => { //shows where opponent card goes
+
+            let card = {}
+
+            for(let i = 0 ;i<cardsArray.length;i++){
+                if(cardsArray[i].name===cardName){
+                     card = cardsArray[i]
+                }
+            }
+            let yValue
+            switch (card.row) {
+                case 'Close':
+                    yValue = 350
+                  break;
+                case 'Range':
+                    yValue = 450
+                    break
+                case 'Siege':
+                    yValue = 550
+                  break;
+                default:
+                  console.log(`SocketHandler Switch Statment Problem`);
+            }
             if (socketId !== scene.socket.id) {
+                scene.GameHandler.opponentField.push(card)
                 scene.GameHandler.opponentHand.shift().destroy();
-                //scene.DeckHandler.dealCard((scene.dropZone1.x - 350) + (scene.dropZone1.data.values.cards * 50), scene.dropZone1.y, cardName, "opponentCard");
-                scene.DeckHandler.dealCard(500, 500, cardName, "opponentCard");
+                scene.DeckHandler.dealCard(400 + 100*scene.GameHandler.opponentField.length, yValue, cardName, "opponentCard");
                 scene.dropZone.data.values.cards++;
             }
         })
