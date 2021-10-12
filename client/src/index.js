@@ -1,12 +1,14 @@
 import Phaser from "phaser";
-import React from "react";
-import ReactDOM from 'react-dom';
-import App from '/client/App';
-import { BrowserRouter } from 'react-router-dom'
+import Game from "./scenes/game";
 
-ReactDOM.render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>,
-    document.getElementById('app')
-)
+const config = {
+    type: Phaser.AUTO,
+    parent: "phaser-example",
+    width: 1280,
+    height: 1200,
+    scene: [
+        Game
+    ]
+};
+
+const game = new Phaser.Game(config);
