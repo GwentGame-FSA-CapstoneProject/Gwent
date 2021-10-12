@@ -1,7 +1,5 @@
 const express = require('express')
 const app = require('express')();
-const server = require('express')();
-
 const shuffle = require('shuffle-array');
 const path = require('path');
 
@@ -10,8 +8,6 @@ const path = require('path');
 app.use(express.static(path.join(__dirname, '..', 'dist')))
 
 app.get('*', (req, res)=> res.sendFile(path.join(__dirname, '..', 'dist/index.html')));
-
-// app.use(cors());
 
 const server = app.listen(5000, function () {
     console.log('Server started at port 5000!');

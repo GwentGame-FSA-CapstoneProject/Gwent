@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { withRouter, BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import Lobby from './src/components/Lobby';
-import Game from './src/components/Game';
+import { Route, Switch, Redirect } from "react-router-dom";
+import Lobby from './components/Lobby';
+import Game from './components/Game';
 
 class Routes extends Component {
   render(){
