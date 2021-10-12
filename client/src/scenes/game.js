@@ -13,10 +13,10 @@ export default class Game extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("albrich", "client/src/assets/albrich.png");
-    this.load.image('cow', "client/src/assets/cow.png");
-    this.load.image('cardBack', "client/src/assets/cardBack.png");
-    this.load.image("board", "client/src/assets/board.jpg");
+    this.load.image("albrich", "/assets/albrich.png");
+    this.load.image('cow', "/assets/cow.png");
+    this.load.image('cardBack', "/assets/cardBack.png");
+    this.load.image("board", "/assets/board.jpg");
     //load other cards
   }
 

@@ -1,11 +1,11 @@
 import React from "react";
-import playGame from "../scenes/game";
+import playGame from "../src/scenes/game";
 
 export const config = {
         type: Phaser.AUTO,
         parent: "phaser-example",
         width: 1280,
-        height: 780,
+        height: 1200,
         scene: [
             playGame
         ]
