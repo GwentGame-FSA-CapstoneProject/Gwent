@@ -19,8 +19,8 @@ export default class InteractiveHandler {
             }
         });
 
-        scene.drawCard.on('pointerdown', () => {                 //Draw card button is a production-only feature
-            scene.socket.emit('drawCard', scene.socket.id);      // to be removed later when more gameplay is functional
+        scene.drawCard.on('pointerdown', () => {                 
+            scene.socket.emit('drawCard', scene.socket.id);      
             scene.drawCard.disableInteractive();
             scene.drawCard.setVisible(false);
         })
@@ -59,23 +59,30 @@ export default class InteractiveHandler {
                      card = cardsArray[i]
                 }
             }
-            let yValue
+            let yValue;
+            let xOffset;
             switch (card.row) {
                 case 'Close':
                     yValue = 660
-                  break;
+                    scene.GameHandler.playerClose.push(card);
+                    xOffset = scene.GameHandler.playerClose.length;
+                    break;
                 case 'Range':
                     yValue = 760
-                    break
+                    scene.GameHandler.playerRange.push(card);
+                    xOffset = scene.GameHandler.playerRange.length;
+                    break;
                 case 'Siege':
                     yValue = 860
-                  break;
+                    scene.GameHandler.playerSiege.push(card);
+                    xOffset = scene.GameHandler.playerSiege.length;
+                    break;
                 default:
-                  console.log(`SocketHandler Switch Statment Problem`);
+                  console.log(`InteractiveHandler Switch Statement Problem`);
             }
             if (scene.GameHandler.isMyTurn && scene.GameHandler.gameState === 'Ready'){
                 scene.GameHandler.playerField.push(card)
-                gameObject.x = dropZone.x - 350 + scene.GameHandler.playerField.length * 100;
+                gameObject.x = dropZone.x - 350 + xOffset * 100;
                 gameObject.y = yValue;
                 scene.socket.emit('cardPlayed', gameObject.data.values.name, scene.socket.id);
                 scene.input.setDraggable(gameObject, false);
