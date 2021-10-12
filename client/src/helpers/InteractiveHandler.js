@@ -11,8 +11,8 @@ export default class InteractiveHandler {
         });
 
         scene.input.on('pointerout', (event, gameObjects) => {
-            if(gameObjects[0].type === "Image" && gameObjects[0].data.list.name)
-                console.log(gameObjects[0].data.list.name);
+            // if(gameObjects[0].type === "Image" && gameObjects[0].data.list.name)
+            //     console.log(gameObjects[0].data.list.name);
             
             if (gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardBack") {
                 scene.cardPreview.setVisible(false);
@@ -21,7 +21,8 @@ export default class InteractiveHandler {
 
         scene.drawCard.on('pointerdown', () => {                 //Draw card button is a production-only feature
             scene.socket.emit('drawCard', scene.socket.id);      // to be removed later when more gameplay is functional
-            console.log('Draw Card Pressed');
+            scene.drawCard.disableInteractive();
+            scene.drawCard.setVisible(false);
         })
 
         scene.drawCard.on('pointerover', () => {

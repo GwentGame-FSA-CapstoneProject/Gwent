@@ -42,12 +42,12 @@ io.on('connection', function (socket) {
     })
 
     socket.on('drawCard', function (socketId) {
+        for(let i = 0; i < 10; i++){
         if (players[socketId].inDeck.length === 0) {
             players[socketId].inDeck = shuffle(["albrich", "cow"]);
         }
         players[socketId].inHand.push(players[socketId].inDeck.shift());
-
-        console.log(players);
+    }   
         io.emit('drawCard', socketId, players[socketId].inHand);
         readyCheck++;
         if (readyCheck >= 2) {
