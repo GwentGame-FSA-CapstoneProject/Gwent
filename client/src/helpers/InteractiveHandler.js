@@ -2,22 +2,7 @@ import cardsArray from '../cards/cardClass';
 export default class InteractiveHandler {
     constructor(scene){
 
-        scene.cardPreview = null;
-
-        scene.input.on('pointerover', (event, gameObjects) => {
-            if (gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardBack") {
-                scene.cardPreview = scene.add.image(1180, 600, gameObjects[0].data.values.name).setScale(0.5, 0.5);
-            }
-        });
-
-        scene.input.on('pointerout', (event, gameObjects) => {
-            if(gameObjects[0].type === "Image" && gameObjects[0].data.list.name)
-                console.log(gameObjects[0].data.list.name);
-            
-            if (gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardBack") {
-                scene.cardPreview.setVisible(false);
-            }
-        });
+        //card preview stuff (showing larger images w/ mroe game detail of cards you select)
 
         scene.drawCard.on('pointerdown', () => {                 //Draw card button is a production-only feature
             scene.socket.emit('drawCard', scene.socket.id);      // to be removed later when more gameplay is functional
@@ -40,7 +25,7 @@ export default class InteractiveHandler {
         scene.input.on('dragstart', (pointer, gameObject) => {
             gameObject.setTint(0xff69b4);
             scene.children.bringToTop(gameObject);
-            scene.cardPreview.setVisible(false);
+            //scene.cardPreview.setVisible(false);
         })
 
         scene.input.on('dragend', (pointer, gameObject, dropped) => {
@@ -77,7 +62,6 @@ export default class InteractiveHandler {
                 gameObject.x = dropZone.x - 350 + scene.GameHandler.playerField.length * 100;
                 gameObject.y = yValue;
                 scene.socket.emit('cardPlayed', gameObject.data.values.name, scene.socket.id);
-                scene.input.setDraggable(gameObject, false);
             }else{
                 gameObject.x = gameObject.input.dragStartX;
                 gameObject.y = gameObject.input.dragStartY;
