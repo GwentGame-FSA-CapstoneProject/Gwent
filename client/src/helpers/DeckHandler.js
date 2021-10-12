@@ -14,7 +14,7 @@ export default class DeckHandler {
                 emielRegis: new EmilRegis(scene),
                 gaunt: new Gaunt(scene),
                 gauntDarkness: new GauntDarkness(scene),
-                Botchling: new Botchling(scene),
+                botchling: new Botchling(scene),
                 bovineDf: new BovineDF(scene),
                 vesemir: new Vesemir(scene),
                 zoltonChivay: new ZoltonChivay(scene),
