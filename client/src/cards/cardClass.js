@@ -82,7 +82,7 @@ export class EmilRegis extends Card {
 export class Gaunt extends Card {
   constructor(scene) {
     super(scene);
-    this.name = "Gaunt O'Dimm",
+    this.name = "gaunt_odimm",
     this.strength = 2,
     this.type = "Unit",
     this.row = 'Siege',
@@ -104,7 +104,7 @@ export class GauntDarkness extends Card {
 export class Botchling extends Card {
   constructor(scene) {
     super(scene);
-    this.name = "Botchling",
+    this.name = "botchling",
     this.strength = 4,
     this.type = "Unit",
     this.row = "Close",
@@ -140,7 +140,7 @@ let albrich = new Albrich()
 let cow = new Cow()
 let dandelion = new Dandelion()
 let emilRegis = new EmilRegis()
-let gaunt = new Gaunt()
+let gaunt_odimm = new Gaunt()
 let gauntDarkness = new GauntDarkness()
 let botchling = new Botchling()
 let vesemir = new Vesemir()
@@ -148,7 +148,7 @@ let zoltonChivay = new ZoltonChivay()
 
 const cardsArray = [
   cardBack, bovineDF, albrich, cow, dandelion,
-  emilRegis, gaunt, gauntDarkness, botchling,
+  emilRegis, gaunt_odimm, gauntDarkness, botchling,
   vesemir, zoltonChivay
 ]
 

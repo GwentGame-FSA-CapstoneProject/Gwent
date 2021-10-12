@@ -35,7 +35,7 @@ io.on('connection', function (socket) {
     }
 
     socket.on('sendDeck', function (socketId) {
-        players[socketId].inDeck = shuffle(['albrich', 'cow']); //***need to put whole deck here I think*/
+        players[socketId].inDeck = shuffle(['albrich', 'cow','botchling','gaunt_odimm']); //***need to put whole deck here I think*/
         console.log(players);
         if(Object.keys(players).length < 2) return;
         io.emit('changeGameState', "Initializing"); //might need extra check to stop spectators restarting game
@@ -44,10 +44,10 @@ io.on('connection', function (socket) {
     socket.on('drawCard', function (socketId) {
         for(let i = 0; i < 10; i++){
         if (players[socketId].inDeck.length === 0) {
-            players[socketId].inDeck = shuffle(["albrich", "cow"]);
+            players[socketId].inDeck = shuffle(["albrich", "cow",'botchling','gaunt_odimm']);
         }
         players[socketId].inHand.push(players[socketId].inDeck.shift());
-    }   
+    }
         io.emit('drawCard', socketId, players[socketId].inHand);
         readyCheck++;
         if (readyCheck >= 2) {
