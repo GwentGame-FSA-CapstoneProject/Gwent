@@ -1,4 +1,4 @@
-import {BovineDF, Albrich, Cow, Dandelion, 
+import {BovineDF, Albrich, Cow, Dandelion,
 EmilRegis, Gaunt, GauntDarkness, Botchling,
 Vesemir, ZoltonChivay, CardBack} from '../cards/cardClass';
 
@@ -12,9 +12,9 @@ export default class DeckHandler {
                 cow: new Cow(scene),
                 dandelion: new Dandelion(scene),
                 emielRegis: new EmilRegis(scene),
-                gaunt: new Gaunt(scene),
+                gaunt_odimm: new Gaunt(scene),
                 gauntDarkness: new GauntDarkness(scene),
-                Botchling: new Botchling(scene),
+                botchling: new Botchling(scene),
                 bovineDf: new BovineDF(scene),
                 vesemir: new Vesemir(scene),
                 zoltonChivay: new ZoltonChivay(scene),

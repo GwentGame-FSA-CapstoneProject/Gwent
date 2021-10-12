@@ -17,6 +17,8 @@ export default class Game extends Phaser.Scene {
     this.load.image('cow', "/assets/cow.png");
     this.load.image('cardBack', "/assets/cardBack.png");
     this.load.image("board", "/assets/board.jpg");
+    this.load.image('botchling', "assets/botchling.png");
+    this.load.image('gaunt_odimm',"assets/gaunt_odimm.png")
     //load other cards
   }
 

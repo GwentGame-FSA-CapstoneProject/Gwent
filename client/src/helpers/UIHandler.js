@@ -11,7 +11,7 @@ export default class UIHandler {
         }
 
         this.buildGameText = () => {
-            scene.drawCard = scene.add.text(160, 660, "Draw Card").setFontSize(20).setInteractive();
+            scene.drawCard = scene.add.text(370, 1030, "Click here to start!").setFontSize(42).setInteractive();
         }
 
         this.buildUI = () => {
