@@ -1,20 +1,27 @@
+const express = require('express')
+const app = require('express')();
 const server = require('express')();
-const http = require('http').createServer(server);
+
 const shuffle = require('shuffle-array');
-const cors = require('cors');
+const path = require('path');
+
+
+// static file-serving middleware
+app.use(express.static(path.join(__dirname, '..', 'dist')))
+
+app.get('*', (req, res)=> res.sendFile(path.join(__dirname, '..', 'dist/index.html')));
+
+// app.use(cors());
+
+const server = app.listen(5000, function () {
+    console.log('Server started at port 5000!');
+});
 
 let gameState = 'Initializing';
 let players = {};
 let readyCheck = 0;
 
-const io = require('socket.io')(http, {
-    cors: {
-        origin: 'http://localhost:8080',
-        methods: ['GET', 'POST']
-    }
-});
-
-server.use(cors());
+const io = require('socket.io')(server);
 
 io.on('connection', function (socket) {
     console.log('A user connected: ' + socket.id);
@@ -28,7 +35,7 @@ io.on('connection', function (socket) {
 
     if (Object.keys(players).length < 2) {
         players[socket.id].isPlayerA = true;
-        io.emit('firstTurn'); 
+        io.emit('firstTurn');
     }
 
     socket.on('sendDeck', function (socketId) {
@@ -62,8 +69,4 @@ io.on('connection', function (socket) {
         console.log('A user disconnected: ' + socket.id);
         delete players[socket.id];
     });
-});
-
-http.listen(3000, function () {
-    console.log('Server started!');
 });

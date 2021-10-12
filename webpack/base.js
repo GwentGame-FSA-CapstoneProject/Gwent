@@ -1,14 +1,24 @@
 const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const WebpackShellPlugin = require("webpack-shell-plugin");
+const { CleanWebpackPlugin }  = require("clean-webpack-plugin");
 
 module.exports = {
   entry: './client/src/index.js',
+  output: {
+    path: path.resolve('dist'),
+    filename: 'bundle.js'
+  },
+  watch: true,
   mode: "development",
   devtool: "eval-source-map",
   module: {
     rules: [
+      {
+        test: /\.css$/,
+        use: [{ loader: "style-loader" }, { loader: "css-loader" }]
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -27,15 +37,12 @@ module.exports = {
     ]
   },
   plugins: [
-    // new CleanWebpackPlugin({
-    //   root: path.resolve(__dirname, "./")
-    // }),
-    new webpack.DefinePlugin({
-      CANVAS_RENDERER: JSON.stringify(true),
-      WEBGL_RENDERER: JSON.stringify(true)
-    }),
     new HtmlWebpackPlugin({
-      template: "./client/public/index.html"
-    })
-  ]
+      template: "client/index.html"
+    }),
+    new CleanWebpackPlugin(),
+    new WebpackShellPlugin({
+      onBuildEnd: ['npm run copy', 'npm run start:server']
+    }),
+  ],
 };
