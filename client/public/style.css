@@ -2,3 +2,11 @@ body {
   display: flex;
   background-color: blue;
 }
+
+.gamewindow {
+  position: absolute;
+  left: 33.3333%;
+  width: 66.6666%;
+  top: 0;
+  bottom: 0;
+}
