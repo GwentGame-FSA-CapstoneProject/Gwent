@@ -28,6 +28,14 @@ export default class SocketHandler {
             scene.GameHandler.changeTurn();
         })
 
+        scene.socket.on('passTurn', (socketId) => {
+            console.log("****passed*****", socketId);
+        })
+
+        scene.socket.on('endRound', () => {
+            console.log("End of Round placeholder");
+        })
+
         scene.socket.on('drawCard', (socketId, cards) => {
             if (socketId === scene.socket.id) {
                 for (let i in cards) {
@@ -38,6 +46,7 @@ export default class SocketHandler {
                     let card = scene.GameHandler.opponentHand.push(scene.DeckHandler.dealCard(100 + (i * 125), 135, "cardBack", "opponentCard"));
                 }
             }
+        
         })
 
         scene.socket.on('cardPlayed', (cardName, socketId) => { //shows where opponent card goes
