@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:server": "nodemon server/index.js",
     "start:dev": "webpack --config webpack/base.js",
-    "heroky-postbuild" : "webpack --config webpack/prod.js",
+    "heroku-postbuild" : "webpack --config webpack/prod.js",
     "copy": "cp -r ./client/public/assets dist",
     "start": "node server"
   },
