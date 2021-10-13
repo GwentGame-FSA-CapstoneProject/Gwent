@@ -7,6 +7,7 @@ const WebpackShellPlugin = require("webpack-shell-plugin");
 module.exports = merge(base, {
   mode: "production",
   devtool: false,
+  watch: false,
   performance: {
     maxEntrypointSize: 900000,
     maxAssetSize: 900000
@@ -26,5 +27,5 @@ module.exports = merge(base, {
     new WebpackShellPlugin({
       onBuildEnd: ['npm run copy']
     }),
-  ],
+  ]
 });
