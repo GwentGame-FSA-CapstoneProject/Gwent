@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "engines": {
+    "node": "14.15.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:server": "nodemon server/index.js",
     "build": "webpack --config webpack/base.js",
+    "build:release" : "webpack --config webpack/prod.js",
     "copy": "cp -r ./client/public/assets dist",
     "start": "npm run build"
   },
