@@ -12,7 +12,7 @@ class Routes extends Component {
           <Route path="/lobby" component={Lobby} />
           {/* <Route path="/game" component={Game} /> */}
           <Route exact path="/homepage" component={Homepage} />
-          <Redirect to="Homepage" />
+          <Redirect to="homepage" />
         </Switch>
       </BrowserRouter>
     );

@@ -6,6 +6,7 @@ const Lobby = () => {
     <div>
       <h3>Welcome to the lobby!</h3>
       <Game />
+      <Chat />
     </div>
   );
 };

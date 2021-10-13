@@ -7,8 +7,8 @@ const App = () => {
     <div
       style={{
         display: "flex",
-        alignContent: "left",
-        justifyContent: "left",
+        alignContent: "right",
+        justifyContent: "right",
         flexDirection: "row",
         height: "100vh",
       }}
