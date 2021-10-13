@@ -53,17 +53,17 @@ export default class SocketHandler {
                 let xOffset = 0;
                 switch (card.row) {
                     case 'Close':
-                        yValue = 550
+                        yValue = 560;
                         scene.GameHandler.opponentClose.push(card);
                         xOffset = scene.GameHandler.opponentClose.length;
                     break;
                     case 'Range':
-                        yValue = 450
+                        yValue = 458;
                         scene.GameHandler.opponentRange.push(card);
                         xOffset = scene.GameHandler.opponentRange.length;
                         break;
                     case 'Siege':
-                        yValue = 350
+                        yValue = 355;
                         scene.GameHandler.opponentSiege.push(card);
                         xOffset = scene.GameHandler.opponentSiege.length;
                     break;
@@ -73,7 +73,7 @@ export default class SocketHandler {
 
                     scene.GameHandler.opponentField.push(card)
                     scene.GameHandler.opponentHand.shift().destroy();
-                    scene.DeckHandler.dealCard(400 + 100 * xOffset, yValue, cardName, "opponentCard");
+                    scene.DeckHandler.dealCard(425 + 70 * xOffset, yValue, cardName, "opponentCard").setCrop(0, 0, 300, 370);
                     scene.dropZone.data.values.cards++;
             }
         })
