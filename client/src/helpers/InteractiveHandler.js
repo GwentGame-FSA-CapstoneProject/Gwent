@@ -6,7 +6,7 @@ export default class InteractiveHandler {
 
         scene.input.on('pointerover', (event, gameObjects) => {
             if (gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardBack") {
-                scene.cardPreview = scene.add.image(1180, 600, gameObjects[0].data.values.name).setScale(0.5, 0.5);
+                scene.cardPreview = scene.add.image(1180, 600, gameObjects[0].data.values.name).setScale(0.75, 0.75);
             }
         });
 
@@ -19,8 +19,8 @@ export default class InteractiveHandler {
             }
         });
 
-        scene.drawCard.on('pointerdown', () => {                 //Draw card button is a production-only feature
-            scene.socket.emit('drawCard', scene.socket.id);      // to be removed later when more gameplay is functional
+        scene.drawCard.on('pointerdown', () => {                //start gamne button (referred to as drawCard) 
+            scene.socket.emit('drawCard', scene.socket.id);      
             scene.drawCard.disableInteractive();
             scene.drawCard.setVisible(false);
         })
@@ -31,6 +31,23 @@ export default class InteractiveHandler {
 
         scene.drawCard.on('pointerout', () => {
             scene.drawCard.setColor('#00ffff')
+        })
+
+        scene.passTurn.on('pointerdown', () => {              //pass turn button
+            if(scene.GameHandler.isMyTurn){
+                scene.socket.emit('passTurn', scene.socket.id);
+                scene.GameHandler.playerPassed = true;      
+                scene.passTurn.disableInteractive();
+            }
+        })
+
+        scene.passTurn.on('pointerover', () => {
+            if(scene.GameHandler.isMyTurn)
+                scene.passTurn.setColor('#ff69b4');
+        })
+
+        scene.passTurn.on('pointerout', () => {
+            scene.passTurn.setColor('#00ffff')
         })
 
         scene.input.on('drag', (pointer, gameObject, dragX, dragY) => {
@@ -53,30 +70,42 @@ export default class InteractiveHandler {
         })
 
         scene.input.on("drop", function (pointer, gameObject, dropZone) {
-            let card = {}
-            for(let i = 0 ;i<cardsArray.length;i++){
+            let card = {};
+            let gameHandler = scene.GameHandler;
+
+            if(!scene.GameHandler.playerPassed)
+            for(let i = 0; i<cardsArray.length; i++){
                 if(cardsArray[i].name===gameObject.texture.key){
                      card = cardsArray[i]
                 }
             }
-            let yValue
-            switch (card.row) {
-                case 'Close':
-                    yValue = 660
-                  break;
-                case 'Range':
-                    yValue = 760
-                    break
-                case 'Siege':
-                    yValue = 860
-                  break;
-                default:
-                  console.log(`SocketHandler Switch Statment Problem`);
-            }
-            if (scene.GameHandler.isMyTurn && scene.GameHandler.gameState === 'Ready'){
-                scene.GameHandler.playerField.push(card)
-                gameObject.x = dropZone.x - 350 + scene.GameHandler.playerField.length * 100;
+            
+            if (scene.GameHandler.isMyTurn && gameHandler.gameState === 'Ready' && gameHandler.playerPassed === false){
+                let yValue;
+                let xOffset;
+                switch (card.row) {
+                    case 'Close':
+                        yValue = 670;
+                        gameHandler.playerClose.push(card);
+                        xOffset = gameHandler.playerClose.length;
+                        break;
+                    case 'Range':
+                        yValue = 770;
+                        gameHandler.playerRange.push(card);
+                        xOffset = gameHandler.playerRange.length;
+                        break;
+                    case 'Siege':
+                        yValue = 875;
+                        gameHandler.playerSiege.push(card);
+                        xOffset = gameHandler.playerSiege.length;
+                        break;
+                    default:
+                      console.log(`InteractiveHandler Switch Statement Problem`);
+                }
+                gameHandler.playerField.push(card);
+                gameObject.x = dropZone.x - 340 + xOffset * 70;
                 gameObject.y = yValue;
+                gameObject.setCrop(0, 0, 300, 370); //removes bottom text on card
                 scene.socket.emit('cardPlayed', gameObject.data.values.name, scene.socket.id);
                 scene.input.setDraggable(gameObject, false);
             }else{

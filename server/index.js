@@ -16,6 +16,7 @@ const server = app.listen(5000, function () {
 let gameState = 'Initializing';
 let players = {};
 let readyCheck = 0;
+let passed = 0;
 
 const io = require('socket.io')(server);
 
@@ -26,7 +27,7 @@ io.on('connection', function (socket) {
         inDeck: [],
         inHand: [],
         isPlayerA: false,
-        isPlayerB: false
+        isPlayerB: false,
     }
 
     if (Object.keys(players).length < 2) {
@@ -35,7 +36,7 @@ io.on('connection', function (socket) {
     }
 
     socket.on('sendDeck', function (socketId) {
-        players[socketId].inDeck = shuffle(['albrich', 'cow','botchling','gaunt_odimm']); //***need to put whole deck here I think*/
+        players[socketId].inDeck = shuffle(['albrich', 'cow','botchling','gaunt_odimm','bovine_defense_force','dandelion','emiel_regis','gaunter_odimm_darkness','vesemir','zoltan']); //***need to put whole deck here I think*/
         console.log(players);
         if(Object.keys(players).length < 2) return;
         io.emit('changeGameState', "Initializing"); //might need extra check to stop spectators restarting game
@@ -44,7 +45,7 @@ io.on('connection', function (socket) {
     socket.on('drawCard', function (socketId) {
         for(let i = 0; i < 10; i++){
         if (players[socketId].inDeck.length === 0) {
-            players[socketId].inDeck = shuffle(["albrich", "cow",'botchling','gaunt_odimm']);
+            players[socketId].inDeck = shuffle(["albrich", "cow",'botchling','gaunt_odimm','bovine_defense_force','dandelion','emiel_regis','gaunter_odimm_darkness','vesemir','zoltan']);
         }
         players[socketId].inHand.push(players[socketId].inDeck.shift());
     }
@@ -58,11 +59,24 @@ io.on('connection', function (socket) {
 
     socket.on('cardPlayed', function (cardName, socketId) {
         io.emit('cardPlayed', cardName, socketId);
-        io.emit('changeTurn');
+
+        if(passed < 1)
+            io.emit('changeTurn');
     });
 
     socket.on('disconnect', function () {
         console.log('A user disconnected: ' + socket.id);
         delete players[socket.id];
+    });
+
+    socket.on('passTurn', function (socketId) {
+        passed++;
+        if(passed > 1){
+            console.log("End of round")
+            io.emit('endRound');
+        }else{
+        io.emit('passTurn', socketId);
+        io.emit('changeTurn');
+        }
     });
 });

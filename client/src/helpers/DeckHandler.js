@@ -11,13 +11,13 @@ export default class DeckHandler {
                 albrich: new Albrich(scene),
                 cow: new Cow(scene),
                 dandelion: new Dandelion(scene),
-                emielRegis: new EmilRegis(scene),
+                emiel_regis: new EmilRegis(scene),
                 gaunt_odimm: new Gaunt(scene),
-                gauntDarkness: new GauntDarkness(scene),
+                gaunter_odimm_darkness: new GauntDarkness(scene),
                 botchling: new Botchling(scene),
-                bovineDf: new BovineDF(scene),
+                bovine_defense_force: new BovineDF(scene),
                 vesemir: new Vesemir(scene),
-                zoltonChivay: new ZoltonChivay(scene),
+                zoltan: new ZoltonChivay(scene),
             }
             let newCard = cards[name];
             return(newCard.render(x, y, type));

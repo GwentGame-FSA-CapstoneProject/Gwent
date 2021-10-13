@@ -28,6 +28,14 @@ export default class SocketHandler {
             scene.GameHandler.changeTurn();
         })
 
+        scene.socket.on('passTurn', (socketId) => {
+            console.log("****passed*****", socketId);
+        })
+
+        scene.socket.on('endRound', () => {
+            console.log("End of Round placeholder");
+        })
+
         scene.socket.on('drawCard', (socketId, cards) => {
             if (socketId === scene.socket.id) {
                 for (let i in cards) {
@@ -38,36 +46,44 @@ export default class SocketHandler {
                     let card = scene.GameHandler.opponentHand.push(scene.DeckHandler.dealCard(100 + (i * 125), 135, "cardBack", "opponentCard"));
                 }
             }
+        
         })
 
         scene.socket.on('cardPlayed', (cardName, socketId) => { //shows where opponent card goes
-
-            let card = {}
-
-            for(let i = 0 ;i<cardsArray.length;i++){
-                if(cardsArray[i].name===cardName){
-                     card = cardsArray[i]
-                }
-            }
-            let yValue
-            switch (card.row) {
-                case 'Close':
-                    yValue = 550
-                  break;
-                case 'Range':
-                    yValue = 450
-                    break
-                case 'Siege':
-                    yValue = 350
-                  break;
-                default:
-                  console.log(`SocketHandler Switch Statment Problem`);
-            }
             if (socketId !== scene.socket.id) {
-                scene.GameHandler.opponentField.push(card)
-                scene.GameHandler.opponentHand.shift().destroy();
-                scene.DeckHandler.dealCard(400 + 100 * scene.GameHandler.opponentField.length, yValue, cardName, "opponentCard");
-                scene.dropZone.data.values.cards++;
+                let card = {};
+
+                for(let i = 0 ; i<cardsArray.length; i++){
+                    if(cardsArray[i].name === cardName){
+                        card = cardsArray[i]
+                    }
+                }
+                let yValue;
+                let xOffset = 0;
+                switch (card.row) {
+                    case 'Close':
+                        yValue = 560;
+                        scene.GameHandler.opponentClose.push(card);
+                        xOffset = scene.GameHandler.opponentClose.length;
+                    break;
+                    case 'Range':
+                        yValue = 458;
+                        scene.GameHandler.opponentRange.push(card);
+                        xOffset = scene.GameHandler.opponentRange.length;
+                        break;
+                    case 'Siege':
+                        yValue = 355;
+                        scene.GameHandler.opponentSiege.push(card);
+                        xOffset = scene.GameHandler.opponentSiege.length;
+                    break;
+                    default:
+                    console.log(`SocketHandler Switch Statement Problem`);
+                }
+
+                    scene.GameHandler.opponentField.push(card)
+                    scene.GameHandler.opponentHand.shift().destroy();
+                    scene.DeckHandler.dealCard(425 + 70 * xOffset, yValue, cardName, "opponentCard").setCrop(0, 0, 300, 370);
+                    scene.dropZone.data.values.cards++;
             }
         })
     }
