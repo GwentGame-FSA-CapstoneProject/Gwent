@@ -12,6 +12,8 @@ export default class UIHandler {
 
         this.buildGameText = () => {
             scene.drawCard = scene.add.text(370, 1030, "Click here to start!").setFontSize(42).setInteractive();
+
+            scene.passTurn = scene.add.text(1100, 590, "Pass Turn").setFontSize(25).setInteractive().setColor('#00ffff');
         }
 
         this.buildUI = () => {
