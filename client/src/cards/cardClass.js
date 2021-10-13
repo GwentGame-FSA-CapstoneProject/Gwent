@@ -115,7 +115,7 @@ export class Botchling extends Card {
 export class Vesemir extends Card {
   constructor(scene) {
     super(scene);
-    this.name = "Vesemir",
+    this.name = "vesemir",
     this.strength = 6,
     this.type = 'Unit',
     this.row = "Close",
