@@ -12,8 +12,7 @@
     "start:dev": "webpack --config webpack/base.js",
     "build" : "webpack --config webpack/prod.js",
     "copy": "cp -r ./client/public/assets dist",
-    "start": "node server",
-    "heroku-postbuild": "node server"
+    "start": "node server"
   },
   "devDependencies": {
     "@babel/core": "^7.7.2",
