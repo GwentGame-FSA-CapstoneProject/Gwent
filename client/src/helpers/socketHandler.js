@@ -39,7 +39,7 @@ export default class SocketHandler {
                 }
             }
         })
-
+        let totalOpponentStrength =0
         scene.socket.on('cardPlayed', (cardName, socketId) => { //shows where opponent card goes
             if (socketId !== scene.socket.id) {
                 let card = {};
@@ -72,6 +72,9 @@ export default class SocketHandler {
                 }
 
                     scene.GameHandler.opponentField.push(card)
+                    console.log('Opponent card strength:',card.strength)
+                    totalOpponentStrength+=card.strength
+                    console.log('Total Opponent strength:',totalOpponentStrength)
                     scene.GameHandler.opponentHand.shift().destroy();
                     scene.DeckHandler.dealCard(400 + 100 * xOffset, yValue, cardName, "opponentCard");
                     scene.dropZone.data.values.cards++;

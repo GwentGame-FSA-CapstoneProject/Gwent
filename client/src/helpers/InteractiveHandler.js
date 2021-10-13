@@ -13,14 +13,14 @@ export default class InteractiveHandler {
         scene.input.on('pointerout', (event, gameObjects) => {
             // if(gameObjects[0].type === "Image" && gameObjects[0].data.list.name)
             //     console.log(gameObjects[0].data.list.name);
-            
+
             if (gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardBack") {
                 scene.cardPreview.setVisible(false);
             }
         });
 
-        scene.drawCard.on('pointerdown', () => {                 
-            scene.socket.emit('drawCard', scene.socket.id);      
+        scene.drawCard.on('pointerdown', () => {
+            scene.socket.emit('drawCard', scene.socket.id);
             scene.drawCard.disableInteractive();
             scene.drawCard.setVisible(false);
         })
@@ -51,7 +51,7 @@ export default class InteractiveHandler {
                 gameObject.y = gameObject.input.dragStartY;
             }
         })
-
+        let totalPlayerStrength =0
         scene.input.on("drop", function (pointer, gameObject, dropZone) {
             let card = {}
             for(let i = 0 ;i<cardsArray.length;i++){
@@ -59,6 +59,7 @@ export default class InteractiveHandler {
                      card = cardsArray[i]
                 }
             }
+
             let yValue;
             let xOffset;
             switch (card.row) {
@@ -81,7 +82,11 @@ export default class InteractiveHandler {
                   console.log(`InteractiveHandler Switch Statement Problem`);
             }
             if (scene.GameHandler.isMyTurn && scene.GameHandler.gameState === 'Ready'){
+
                 scene.GameHandler.playerField.push(card)
+                console.log('Player card strength:',card.strength)
+                totalPlayerStrength+=card.strength
+                console.log('Total Player strength:',totalPlayerStrength)
                 gameObject.x = dropZone.x - 350 + xOffset * 100;
                 gameObject.y = yValue;
                 scene.socket.emit('cardPlayed', gameObject.data.values.name, scene.socket.id);
