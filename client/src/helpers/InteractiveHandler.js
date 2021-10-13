@@ -6,7 +6,7 @@ export default class InteractiveHandler {
 
         scene.input.on('pointerover', (event, gameObjects) => {
             if (gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardBack") {
-                scene.cardPreview = scene.add.image(1180, 600, gameObjects[0].data.values.name).setScale(0.5, 0.5);
+                scene.cardPreview = scene.add.image(1180, 600, gameObjects[0].data.values.name).setScale(0.75, 0.75);
             }
         });
 
@@ -63,17 +63,17 @@ export default class InteractiveHandler {
             let xOffset;
             switch (card.row) {
                 case 'Close':
-                    yValue = 660
+                    yValue = 670;
                     scene.GameHandler.playerClose.push(card);
                     xOffset = scene.GameHandler.playerClose.length;
                     break;
                 case 'Range':
-                    yValue = 760
+                    yValue = 770;
                     scene.GameHandler.playerRange.push(card);
                     xOffset = scene.GameHandler.playerRange.length;
                     break;
                 case 'Siege':
-                    yValue = 860
+                    yValue = 875;
                     scene.GameHandler.playerSiege.push(card);
                     xOffset = scene.GameHandler.playerSiege.length;
                     break;
@@ -81,9 +81,10 @@ export default class InteractiveHandler {
                   console.log(`InteractiveHandler Switch Statement Problem`);
             }
             if (scene.GameHandler.isMyTurn && scene.GameHandler.gameState === 'Ready'){
-                scene.GameHandler.playerField.push(card)
-                gameObject.x = dropZone.x - 350 + xOffset * 100;
+                scene.GameHandler.playerField.push(card);
+                gameObject.x = dropZone.x - 340 + xOffset * 70;
                 gameObject.y = yValue;
+                gameObject.setCrop(0, 0, 300, 370); //removes bottom text on card
                 scene.socket.emit('cardPlayed', gameObject.data.values.name, scene.socket.id);
                 scene.input.setDraggable(gameObject, false);
             }else{
