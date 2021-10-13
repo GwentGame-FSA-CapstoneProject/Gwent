@@ -16,6 +16,7 @@ const server = app.listen(5000, function () {
 let gameState = 'Initializing';
 let players = {};
 let readyCheck = 0;
+let passed = 0;
 
 const io = require('socket.io')(server);
 
@@ -26,7 +27,7 @@ io.on('connection', function (socket) {
         inDeck: [],
         inHand: [],
         isPlayerA: false,
-        isPlayerB: false
+        isPlayerB: false,
     }
 
     if (Object.keys(players).length < 2) {
@@ -58,11 +59,24 @@ io.on('connection', function (socket) {
 
     socket.on('cardPlayed', function (cardName, socketId) {
         io.emit('cardPlayed', cardName, socketId);
-        io.emit('changeTurn');
+
+        if(passed < 1)
+            io.emit('changeTurn');
     });
 
     socket.on('disconnect', function () {
         console.log('A user disconnected: ' + socket.id);
         delete players[socket.id];
+    });
+
+    socket.on('passTurn', function (socketId) {
+        passed++;
+        if(passed > 1){
+            console.log("End of round")
+            io.emit('endRound');
+        }else{
+        io.emit('passTurn', socketId);
+        io.emit('changeTurn');
+        }
     });
 });

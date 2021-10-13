@@ -28,6 +28,14 @@ export default class SocketHandler {
             scene.GameHandler.changeTurn();
         })
 
+        scene.socket.on('passTurn', (socketId) => {
+            console.log("****passed*****", socketId);
+        })
+
+        scene.socket.on('endRound', () => {
+            console.log("End of Round placeholder");
+        })
+
         scene.socket.on('drawCard', (socketId, cards) => {
             if (socketId === scene.socket.id) {
                 for (let i in cards) {
@@ -38,6 +46,7 @@ export default class SocketHandler {
                     let card = scene.GameHandler.opponentHand.push(scene.DeckHandler.dealCard(100 + (i * 125), 135, "cardBack", "opponentCard"));
                 }
             }
+        
         })
         let totalOpponentStrength =0
         scene.socket.on('cardPlayed', (cardName, socketId) => { //shows where opponent card goes
@@ -53,17 +62,17 @@ export default class SocketHandler {
                 let xOffset = 0;
                 switch (card.row) {
                     case 'Close':
-                        yValue = 550
+                        yValue = 560;
                         scene.GameHandler.opponentClose.push(card);
                         xOffset = scene.GameHandler.opponentClose.length;
                     break;
                     case 'Range':
-                        yValue = 450
+                        yValue = 458;
                         scene.GameHandler.opponentRange.push(card);
                         xOffset = scene.GameHandler.opponentRange.length;
                         break;
                     case 'Siege':
-                        yValue = 350
+                        yValue = 355;
                         scene.GameHandler.opponentSiege.push(card);
                         xOffset = scene.GameHandler.opponentSiege.length;
                     break;
@@ -76,7 +85,7 @@ export default class SocketHandler {
                     totalOpponentStrength+=card.strength
                     console.log('Total Opponent strength:',totalOpponentStrength)
                     scene.GameHandler.opponentHand.shift().destroy();
-                    scene.DeckHandler.dealCard(400 + 100 * xOffset, yValue, cardName, "opponentCard");
+                    scene.DeckHandler.dealCard(425 + 70 * xOffset, yValue, cardName, "opponentCard").setCrop(0, 0, 300, 370);
                     scene.dropZone.data.values.cards++;
             }
         })
