@@ -3,10 +3,7 @@ const app = require('express')();
 const shuffle = require('shuffle-array');
 const path = require('path');
 
-let PORT = process.env.PORT;
-if (PORT == null || PORT == "") {
-  PORT = 5000;
-}
+let PORT = process.env.PORT || 5000;
 
 // static file-serving middleware
 app.use(express.static(path.join(__dirname, '..', 'dist')))
