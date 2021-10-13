@@ -27,7 +27,7 @@ export class CardBack extends Card {
 export class BovineDF extends Card {
   constructor(scene) {
     super(scene);
-    this.name = "Bovine Defense Force",
+    this.name = "bovine_defense_force",
     this.strength = 15,
     this.type = "Unit",
     this.row = "Close",
@@ -60,7 +60,7 @@ export class Cow extends Card {
 export class Dandelion extends Card {
   constructor(scene) {
     super(scene);
-    this.name = "Dandelion",
+    this.name = "dandelion",
     this.strength = 2,
     this.type = 'Unit',
     this.row = "Close",
@@ -71,11 +71,11 @@ export class Dandelion extends Card {
 export class EmilRegis extends Card {
   constructor(scene) {
     super(scene);
-    this.name = "Emil Regis",
+    this.name = "emiel_regis",
     this.strength = 5,
     this.type = 'Unit',
     this.row = 'Close',
-    this.image = 'emil_regis'
+    this.image = 'emiel_regis'
   }
 }
 
@@ -93,7 +93,7 @@ export class Gaunt extends Card {
 export class GauntDarkness extends Card {
   constructor(scene) {
     super(scene);
-    this.name = "Gaunt O'Dimm: Darkness",
+    this.name = "gaunter_odimm_darkness",
     this.strength = 4,
     this.type = 'Unit',
     this.row = "Range",
@@ -126,7 +126,7 @@ export class Vesemir extends Card {
 export class ZoltonChivay extends Card {
   constructor(scene) {
     super(scene);
-    this.name = "ZoltonChivay",
+    this.name = "zoltan",
     this.strength = 5,
     this.type = 'Unit'
     this.row = "Close"
@@ -135,21 +135,21 @@ export class ZoltonChivay extends Card {
 }
 
 let cardBack = new CardBack()
-let bovineDF = new BovineDF()
+let bovine_defense_force = new BovineDF()
 let albrich = new Albrich()
 let cow = new Cow()
 let dandelion = new Dandelion()
-let emilRegis = new EmilRegis()
+let emiel_regis = new EmilRegis()
 let gaunt_odimm = new Gaunt()
-let gauntDarkness = new GauntDarkness()
+let gaunter_odimm_darkness = new GauntDarkness()
 let botchling = new Botchling()
 let vesemir = new Vesemir()
-let zoltonChivay = new ZoltonChivay()
+let zoltan = new ZoltonChivay()
 
 const cardsArray = [
-  cardBack, bovineDF, albrich, cow, dandelion,
-  emilRegis, gaunt_odimm, gauntDarkness, botchling,
-  vesemir, zoltonChivay
+  cardBack, bovine_defense_force, albrich, cow, dandelion,
+  emiel_regis, gaunt_odimm, gaunter_odimm_darkness, botchling,
+  vesemir, zoltan
 ]
 
 export default cardsArray
