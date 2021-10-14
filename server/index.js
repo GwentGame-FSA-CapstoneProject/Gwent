@@ -80,4 +80,8 @@ io.on('connection', function (socket) {
         io.emit('changeTurn');
         }
     });
+
+    socket.on('endRound', function(){
+        passed =0
+    })
 });

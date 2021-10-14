@@ -39,7 +39,9 @@ export default class GameHandler {
 
         this.endOfRound = (playerStr, OpponentStr) => {
             //add tie game later
+            let playerWon
             if(playerStr>OpponentStr){
+                playerWon = true
                 console.log('player won the round!')
                 this.playerRoundWins += 1
                 console.log(this.playerRoundWins)
@@ -56,6 +58,10 @@ export default class GameHandler {
             this.playerClose = [];
             this.playerRange = [];
             this.playerSiege = [];
+            if(playerWon){
+                this.isMyTurn= true
+            }
+            this.playerPassed = false
         }
     }
 }
