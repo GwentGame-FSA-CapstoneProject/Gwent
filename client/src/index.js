@@ -1,12 +1,12 @@
-import Phaser from "phaser";
 import React from "react";
-import ReactDOM from 'react-dom';
-import App from '/client/App';
-import { BrowserRouter } from 'react-router-dom'
+import Phaser from "phaser"; //Although this is not actually being used if its removed nothing works
+import ReactDOM from "react-dom";
+import Routes from "../Routes";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>,
-    document.getElementById('app')
-)
+  <BrowserRouter>
+    <Routes />
+  </BrowserRouter>,
+  document.getElementById("app")
+);

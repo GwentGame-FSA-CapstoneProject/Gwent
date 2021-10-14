@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import { Route, Switch, Redirect } from "react-router-dom";
-import Lobby from './components/Lobby';
-import Game from './components/Game';
+import React, { Component } from "react";
+import { Route, Switch, Redirect, BrowserRouter } from "react-router-dom";
+import Lobby from "./components/Lobby";
+import Homepage from "./components/Homepage";
 
 class Routes extends Component {
-  render(){
-    return(
-          <Switch>
-            <Route path="/lobby" component={Lobby} />
-            <Route path="/game" component={Game} />
-            <Route to="/" component={Lobby} />
-            <Redirect to="/lobby" />
-          </Switch>
-    )
+  render() {
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route path="/lobby" component={Lobby} />
+          <Route exact path="/homepage" component={Homepage} />
+          <Redirect to="homepage" />
+        </Switch>
+      </BrowserRouter>
+    );
   }
-
 }
 
-export default Routes
+export default Routes;
