@@ -37,7 +37,7 @@ export default class InteractiveHandler {
             if(scene.GameHandler.isMyTurn){
                 scene.socket.emit('passTurn', scene.socket.id);
                 scene.GameHandler.playerPassed = true;
-                scene.passTurn.disableInteractive();
+                scene.passTurn.disableInteractive().setVisible(false);
             }
         })
 
@@ -68,8 +68,9 @@ export default class InteractiveHandler {
                 gameObject.y = gameObject.input.dragStartY;
             }
         })
-        let totalPlayerStrength =0
+
         scene.input.on("drop", function (pointer, gameObject, dropZone) {
+            console.log(gameObject)
             let card = {};
             let gameHandler = scene.GameHandler;
 
@@ -83,6 +84,9 @@ export default class InteractiveHandler {
             if (scene.GameHandler.isMyTurn && gameHandler.gameState === 'Ready' && gameHandler.playerPassed === false){
                 let yValue;
                 let xOffset;
+                gameObject.inPlay=true
+                console.log(gameObject)
+                console.log(scene.children.list)
                 switch (card.row) {
                     case 'Close':
                         yValue = 670;
