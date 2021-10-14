@@ -1,5 +1,6 @@
 import React from "react";
 import Game from "./Game";
+import Chat from "./Chat";
 
 const Lobby = () => {
   return (

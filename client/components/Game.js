@@ -6,7 +6,6 @@ export default class Game extends React.Component {
     const config = {
       type: Phaser.AUTO,
       parent: "phaser-example",
-      width: "66",
       scene: [playGame],
     };
     new Phaser.Game(config);
