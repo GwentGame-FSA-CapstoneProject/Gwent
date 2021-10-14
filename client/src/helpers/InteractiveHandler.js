@@ -70,7 +70,7 @@ export default class InteractiveHandler {
         })
 
         scene.input.on("drop", function (pointer, gameObject, dropZone) {
-            console.log(gameObject)
+
             let card = {};
             let gameHandler = scene.GameHandler;
 
@@ -85,8 +85,7 @@ export default class InteractiveHandler {
                 let yValue;
                 let xOffset;
                 gameObject.inPlay=true
-                console.log(gameObject)
-                console.log(scene.children.list)
+
                 switch (card.row) {
                     case 'Close':
                         yValue = 670;
