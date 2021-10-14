@@ -28,7 +28,7 @@ export class BovineDF extends Card {
   constructor(scene) {
     super(scene);
     this.name = "bovine_defense_force",
-    this.strength = 15,
+    this.strength = 8,
     this.type = "Unit",
     this.row = "Close",
     this.image = "bovine_defense_force"

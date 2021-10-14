@@ -13,14 +13,14 @@ export default class InteractiveHandler {
         scene.input.on('pointerout', (event, gameObjects) => {
             // if(gameObjects[0].type === "Image" && gameObjects[0].data.list.name)
             //     console.log(gameObjects[0].data.list.name);
-            
+
             if (gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardBack") {
                 scene.cardPreview.setVisible(false);
             }
         });
 
-        scene.drawCard.on('pointerdown', () => {                //start gamne button (referred to as drawCard) 
-            scene.socket.emit('drawCard', scene.socket.id);      
+        scene.drawCard.on('pointerdown', () => {                //start gamne button (referred to as drawCard)
+            scene.socket.emit('drawCard', scene.socket.id);
             scene.drawCard.disableInteractive();
             scene.drawCard.setVisible(false);
         })
@@ -36,8 +36,8 @@ export default class InteractiveHandler {
         scene.passTurn.on('pointerdown', () => {              //pass turn button
             if(scene.GameHandler.isMyTurn){
                 scene.socket.emit('passTurn', scene.socket.id);
-                scene.GameHandler.playerPassed = true;      
-                scene.passTurn.disableInteractive();
+                scene.GameHandler.playerPassed = true;
+                scene.passTurn.disableInteractive().setVisible(false);
             }
         })
 
@@ -70,6 +70,7 @@ export default class InteractiveHandler {
         })
 
         scene.input.on("drop", function (pointer, gameObject, dropZone) {
+            console.log(gameObject)
             let card = {};
             let gameHandler = scene.GameHandler;
 
@@ -79,10 +80,13 @@ export default class InteractiveHandler {
                      card = cardsArray[i]
                 }
             }
-            
+
             if (scene.GameHandler.isMyTurn && gameHandler.gameState === 'Ready' && gameHandler.playerPassed === false){
                 let yValue;
                 let xOffset;
+                gameObject.inPlay=true
+                console.log(gameObject)
+                console.log(scene.children.list)
                 switch (card.row) {
                     case 'Close':
                         yValue = 670;
