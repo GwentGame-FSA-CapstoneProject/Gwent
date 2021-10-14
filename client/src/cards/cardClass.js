@@ -20,7 +20,7 @@ export class CardBack extends Card {
   constructor(scene) {
       super(scene);
       this.name = "cardBack";
-      this.image = "cardBack"
+      this.image = "cardback"
   }
 }
 

@@ -3,14 +3,15 @@ const app = require('express')();
 const shuffle = require('shuffle-array');
 const path = require('path');
 
+let PORT = process.env.PORT || 5000;
 
 // static file-serving middleware
 app.use(express.static(path.join(__dirname, '..', 'dist')))
 
 app.get('*', (req, res)=> res.sendFile(path.join(__dirname, '..', 'dist/index.html')));
 
-const server = app.listen(5000, function () {
-    console.log('Server started at port 5000!');
+const server = app.listen(PORT, function () {
+    console.log(`Server started at port ${PORT}!`);
 });
 
 let gameState = 'Initializing';

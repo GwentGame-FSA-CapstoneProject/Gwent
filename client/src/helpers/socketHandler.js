@@ -4,7 +4,7 @@ import cardsArray from '../cards/cardClass';
 export default class SocketHandler {
     constructor(scene){
 
-        scene.socket = io('http://localhost:5000');
+        scene.socket = io();
 
         scene.socket.on('connect', () => {
             console.log('Connected!');
