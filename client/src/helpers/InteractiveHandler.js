@@ -5,7 +5,7 @@ export default class InteractiveHandler {
         scene.cardPreview = null;
 
         scene.input.on('pointerover', (event, gameObjects) => {
-            if (gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardBack") {
+            if (gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardback") {
                 scene.cardPreview = scene.add.image(1180, 600, gameObjects[0].data.values.name).setScale(0.75, 0.75);
             }
         });
@@ -14,7 +14,7 @@ export default class InteractiveHandler {
             // if(gameObjects[0].type === "Image" && gameObjects[0].data.list.name)
             //     console.log(gameObjects[0].data.list.name);
 
-            if (gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardBack") {
+            if (gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardback") {
                 scene.cardPreview.setVisible(false);
             }
         });

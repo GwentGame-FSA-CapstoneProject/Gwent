@@ -18,8 +18,8 @@ export default class SocketHandler {
         scene.socket.on('changeGameState', (gameState) => {
             scene.GameHandler.changeGameState(gameState);
             if(gameState === 'Initializing'){
-                scene.DeckHandler.dealCard(1138, 703, 'cardBack', 'opponentCard'); //this is called opponent card so it isnt draggable, is technically your deck
-                scene.DeckHandler.dealCard(1138, 498, 'cardBack', 'opponentCard');
+                scene.DeckHandler.dealCard(1138, 703, 'cardback', 'opponentCard'); //this is called opponent card so it isnt draggable, is technically your deck
+                scene.DeckHandler.dealCard(1138, 498, 'cardback', 'opponentCard');
                 //drawCard interactive?
             }
         })
@@ -51,7 +51,7 @@ export default class SocketHandler {
                 }
             } else {
                 for (let i in cards) {
-                    let card = scene.GameHandler.opponentHand.push(scene.DeckHandler.dealCard(100 + (i * 125), 135, "cardBack", "opponentCard"));
+                    let card = scene.GameHandler.opponentHand.push(scene.DeckHandler.dealCard(100 + (i * 125), 135, "cardback", "opponentCard"));
                 }
             }
 
