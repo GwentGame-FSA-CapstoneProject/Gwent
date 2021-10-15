@@ -38,7 +38,7 @@ io.on('connection', function (socket) {
 
     socket.on('sendDeck', function (socketId) {
         players[socketId].inDeck = shuffle(['albrich', 'cow','botchling','gaunt_odimm','bovine_defense_force','dandelion','emiel_regis','gaunter_odimm_darkness','vesemir','zoltan']); //***need to put whole deck here I think*/
-        console.log(players);
+        //console.log(players);
         if(Object.keys(players).length < 2) return;
         io.emit('changeGameState', "Initializing"); //might need extra check to stop spectators restarting game
     })
@@ -76,12 +76,12 @@ io.on('connection', function (socket) {
             console.log("End of round")
             io.emit('endRound');
         }else{
-        io.emit('passTurn', socketId);
-        io.emit('changeTurn');
+        //io.emit('passTurn', socketId);
+            io.emit('changeTurn');
         }
     });
 
-    socket.on('endRound', function(){
-        passed =0
-    })
+    socket.on('endRound', function () {
+        passed = 0;
+    });
 });
