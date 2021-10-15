@@ -29,6 +29,8 @@ export default class SocketHandler {
 
         scene.socket.on('passTurn', (socketId) => {
             console.log("****passed*****", socketId);
+            //this method isnt currently doing anything but might be needed when more... 
+            //...than one game is running depending on how the socket implementation works
         })
 
         scene.socket.on('endRound', () => {

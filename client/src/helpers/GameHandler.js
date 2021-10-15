@@ -44,6 +44,7 @@ export default class GameHandler {
                 playerWon = true;
                 console.log('player won the round!')
                 this.playerRoundWins += 1;
+                scene.socket.emit('playerWon', scene.socket.id);
             } else if (OpponentStr > playerStr){
                 console.log('you lost the round!')
                 this.opponentRoundWins += 1;
