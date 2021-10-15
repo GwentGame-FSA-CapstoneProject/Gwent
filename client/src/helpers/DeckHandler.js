@@ -7,7 +7,7 @@ export default class DeckHandler {
     constructor(scene) {
         this.dealCard = (x, y, name, type) => {
             let cards = {
-                cardBack: new CardBack(scene),
+                cardback: new CardBack(scene),
                 albrich: new Albrich(scene),
                 cow: new Cow(scene),
                 dandelion: new Dandelion(scene),

@@ -5,7 +5,7 @@ export default class InteractiveHandler {
         scene.cardPreview = null;
 
         scene.input.on('pointerover', (event, gameObjects) => {
-            if (gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardBack") {
+            if (gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardback") {
                 scene.cardPreview = scene.add.image(1180, 600, gameObjects[0].data.values.name).setScale(0.75, 0.75);
             }
         });
@@ -13,14 +13,14 @@ export default class InteractiveHandler {
         scene.input.on('pointerout', (event, gameObjects) => {
             // if(gameObjects[0].type === "Image" && gameObjects[0].data.list.name)
             //     console.log(gameObjects[0].data.list.name);
-            
-            if (gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardBack") {
+
+            if (gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardback") {
                 scene.cardPreview.setVisible(false);
             }
         });
 
-        scene.drawCard.on('pointerdown', () => {                //start gamne button (referred to as drawCard) 
-            scene.socket.emit('drawCard', scene.socket.id);      
+        scene.drawCard.on('pointerdown', () => {                //start gamne button (referred to as drawCard)
+            scene.socket.emit('drawCard', scene.socket.id);
             scene.drawCard.disableInteractive();
             scene.drawCard.setVisible(false);
         })
@@ -36,8 +36,8 @@ export default class InteractiveHandler {
         scene.passTurn.on('pointerdown', () => {              //pass turn button
             if(scene.GameHandler.isMyTurn){
                 scene.socket.emit('passTurn', scene.socket.id);
-                scene.GameHandler.playerPassed = true;      
-                scene.passTurn.disableInteractive();
+                scene.GameHandler.playerPassed = true;
+                scene.passTurn.disableInteractive().setVisible(false);
             }
         })
 
@@ -70,6 +70,7 @@ export default class InteractiveHandler {
         })
 
         scene.input.on("drop", function (pointer, gameObject, dropZone) {
+
             let card = {};
             let gameHandler = scene.GameHandler;
 
@@ -79,10 +80,12 @@ export default class InteractiveHandler {
                      card = cardsArray[i]
                 }
             }
-            
+
             if (scene.GameHandler.isMyTurn && gameHandler.gameState === 'Ready' && gameHandler.playerPassed === false){
                 let yValue;
                 let xOffset;
+                gameObject.inPlay=true
+
                 switch (card.row) {
                     case 'Close':
                         yValue = 670;

@@ -18,9 +18,8 @@ export default class SocketHandler {
         scene.socket.on('changeGameState', (gameState) => {
             scene.GameHandler.changeGameState(gameState);
             if(gameState === 'Initializing'){
-                scene.DeckHandler.dealCard(1138, 703, 'cardBack', 'opponentCard'); //this is called opponent card so it isnt draggable, is technically your deck
-                scene.DeckHandler.dealCard(1138, 498, 'cardBack', 'opponentCard');
-                //drawCard interactive?
+                scene.DeckHandler.dealCard(1138, 703, 'cardback', 'opponentCard'); //this is called opponent card so it isnt draggable, is technically your deck
+                scene.DeckHandler.dealCard(1138, 498, 'cardback', 'opponentCard');
             }
         })
 
@@ -30,10 +29,21 @@ export default class SocketHandler {
 
         scene.socket.on('passTurn', (socketId) => {
             console.log("****passed*****", socketId);
+            //this method isnt currently doing anything but might be needed when more...
+            //...than one game is running depending on how the socket implementation works
         })
 
         scene.socket.on('endRound', () => {
             console.log("End of Round placeholder");
+            let playerStr =  scene.GameHandler.totalStrength(scene.GameHandler.playerField)
+            let opponentStr = scene.GameHandler.totalStrength(scene.GameHandler.opponentField)
+            scene.GameHandler.endOfRound(playerStr,opponentStr)
+            for(let i=0;i<scene.children.list.length;i++){
+                if(scene.children.list[i].inPlay){
+                    scene.children.list[i].setVisible(false)
+                }
+            }
+            scene.socket.emit('endRound');
         })
 
         scene.socket.on('drawCard', (socketId, cards) => {
@@ -43,10 +53,18 @@ export default class SocketHandler {
                 }
             } else {
                 for (let i in cards) {
-                    let card = scene.GameHandler.opponentHand.push(scene.DeckHandler.dealCard(100 + (i * 125), 135, "cardBack", "opponentCard"));
+                    let card = scene.GameHandler.opponentHand.push(scene.DeckHandler.dealCard(100 + (i * 125), 135, "cardback", "opponentCard"));
                 }
             }
-        
+
+        })
+
+        scene.socket.on('endGame',(socketId)=>{
+            if (socketId === scene.socket.id) {
+                scene.scene.start('GameWon')
+            }else {
+                scene.scene.start('GameLost')
+            }
         })
 
         scene.socket.on('cardPlayed', (cardName, socketId) => { //shows where opponent card goes
@@ -82,8 +100,8 @@ export default class SocketHandler {
 
                     scene.GameHandler.opponentField.push(card)
                     scene.GameHandler.opponentHand.shift().destroy();
-                    scene.DeckHandler.dealCard(425 + 70 * xOffset, yValue, cardName, "opponentCard").setCrop(0, 0, 300, 370);
-                    scene.dropZone.data.values.cards++;
+                    scene.DeckHandler.dealCard(425 + 70 * xOffset, yValue, cardName, "opponentCard").setCrop(0, 0, 300, 370).inPlay =true ;
+
             }
         })
     }

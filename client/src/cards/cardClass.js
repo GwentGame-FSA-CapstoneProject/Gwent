@@ -19,7 +19,7 @@ export class Card {
 export class CardBack extends Card {
   constructor(scene) {
       super(scene);
-      this.name = "cardBack";
+      this.name = "cardback";
       this.image = "cardback"
   }
 }
@@ -28,7 +28,7 @@ export class BovineDF extends Card {
   constructor(scene) {
     super(scene);
     this.name = "bovine_defense_force",
-    this.strength = 15,
+    this.strength = 8,
     this.type = "Unit",
     this.row = "Close",
     this.image = "bovine_defense_force"
@@ -134,7 +134,7 @@ export class ZoltonChivay extends Card {
   }
 }
 
-let cardBack = new CardBack()
+let cardback = new CardBack()
 let bovine_defense_force = new BovineDF()
 let albrich = new Albrich()
 let cow = new Cow()
@@ -147,7 +147,7 @@ let vesemir = new Vesemir()
 let zoltan = new ZoltonChivay()
 
 const cardsArray = [
-  cardBack, bovine_defense_force, albrich, cow, dandelion,
+  cardback, bovine_defense_force, albrich, cow, dandelion,
   emiel_regis, gaunt_odimm, gaunter_odimm_darkness, botchling,
   vesemir, zoltan
 ]
