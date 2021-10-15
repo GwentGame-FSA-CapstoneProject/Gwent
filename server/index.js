@@ -28,7 +28,8 @@ io.on('connection', function (socket) {
         inDeck: [],
         inHand: [],
         isPlayerA: false,
-        isPlayerB: false,
+        isPlayerB: false, //not being used currently
+        roundsWon: 0
     }
 
     if (Object.keys(players).length < 2) {
@@ -76,12 +77,16 @@ io.on('connection', function (socket) {
             console.log("End of round")
             io.emit('endRound');
         }else{
-        //io.emit('passTurn', socketId);
             io.emit('changeTurn');
         }
     });
 
     socket.on('endRound', function () {
         passed = 0;
+    });
+
+    socket.on('playerWon', function (socketId) {
+        players[socketId].roundsWon++;
+        console.log(players[socket.id].roundsWon);
     });
 });
