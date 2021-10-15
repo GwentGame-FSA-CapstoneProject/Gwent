@@ -31,24 +31,22 @@ export default class GameHandler {
         }
 
         this.totalStrength = (fieldArray) => {
-            const reducerfunc = (accu,currentUnit) => {
-                return accu+currentUnit.strength
+            const reducerfunc = (accu, currentUnit) => {
+                return accu + currentUnit.strength
             }
-            return fieldArray.reduce(reducerfunc,0)
+            return fieldArray.reduce(reducerfunc, 0)
         }
 
         this.endOfRound = (playerStr, OpponentStr) => {
             //add tie game later
-            let playerWon
-            if(playerStr>OpponentStr){
-                playerWon = true
+            let playerWon = false;
+            if(playerStr > OpponentStr){
+                playerWon = true;
                 console.log('player won the round!')
-                this.playerRoundWins += 1
-                console.log(this.playerRoundWins)
-            } else if (OpponentStr >playerStr){
+                this.playerRoundWins += 1;
+            } else if (OpponentStr > playerStr){
                 console.log('you lost the round!')
-                this.opponentRoundWins+= 1
-                console.log(this.opponentRoundWins)
+                this.opponentRoundWins += 1;
             }
             this.playerField = [];
             this.opponentField = [];
@@ -59,9 +57,12 @@ export default class GameHandler {
             this.playerRange = [];
             this.playerSiege = [];
             if(playerWon){
-                this.isMyTurn= true
+                this.isMyTurn = true;
+            }else{
+                this.isMyTurn = false;
             }
-            this.playerPassed = false
+            this.playerPassed = false;
+            scene.passTurn.setInteractive(true).setVisible(true);
         }
     }
 }

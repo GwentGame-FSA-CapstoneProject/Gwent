@@ -20,7 +20,6 @@ export default class SocketHandler {
             if(gameState === 'Initializing'){
                 scene.DeckHandler.dealCard(1138, 703, 'cardback', 'opponentCard'); //this is called opponent card so it isnt draggable, is technically your deck
                 scene.DeckHandler.dealCard(1138, 498, 'cardback', 'opponentCard');
-                //drawCard interactive?
             }
         })
 
@@ -42,6 +41,7 @@ export default class SocketHandler {
                     scene.children.list[i].setVisible(false)
                 }
             }
+            scene.socket.emit('endRound');
         })
 
         scene.socket.on('drawCard', (socketId, cards) => {
