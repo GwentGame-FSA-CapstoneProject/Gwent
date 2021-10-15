@@ -3,6 +3,7 @@ const app = require('express')();
 const shuffle = require('shuffle-array');
 const path = require('path');
 
+
 let PORT = process.env.PORT || 5000;
 
 // static file-serving middleware
@@ -29,7 +30,8 @@ io.on('connection', function (socket) {
         inHand: [],
         isPlayerA: false,
         isPlayerB: false, //not being used currently
-        roundsWon: 0
+        roundsWon: 0,
+        roundsLost: 0
     }
 
     if (Object.keys(players).length < 2) {
@@ -88,5 +90,8 @@ io.on('connection', function (socket) {
     socket.on('playerWon', function (socketId) {
         players[socketId].roundsWon++;
         console.log(players[socket.id].roundsWon);
+        if (players[socketId].roundsWon===2){
+            io.emit('endGame',socketId)
+        }
     });
 });

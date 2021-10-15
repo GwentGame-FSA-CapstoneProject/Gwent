@@ -29,7 +29,7 @@ export default class SocketHandler {
 
         scene.socket.on('passTurn', (socketId) => {
             console.log("****passed*****", socketId);
-            //this method isnt currently doing anything but might be needed when more... 
+            //this method isnt currently doing anything but might be needed when more...
             //...than one game is running depending on how the socket implementation works
         })
 
@@ -57,6 +57,14 @@ export default class SocketHandler {
                 }
             }
 
+        })
+
+        scene.socket.on('endGame',(socketId)=>{
+            if (socketId === scene.socket.id) {
+                scene.scene.start('GameWon')
+            }else {
+                scene.scene.start('GameLost')
+            }
         })
 
         scene.socket.on('cardPlayed', (cardName, socketId) => { //shows where opponent card goes
