@@ -90,8 +90,15 @@ io.on('connection', function (socket) {
     socket.on('playerWon', function (socketId) {
         players[socketId].roundsWon++;
         console.log(players[socket.id].roundsWon);
-        if (players[socketId].roundsWon===2){
-            io.emit('endGame',socketId)
+        if (players[socketId].roundsWon === 2){
+            io.emit('endGame', socketId)
         }
+    });
+
+    socket.on('draw', function (socketId) {
+        players[socketId].roundsWon++;
+
+        if(players[socketId].isPlayerA)
+            io.emit('yourTurn', socketId)
     });
 });

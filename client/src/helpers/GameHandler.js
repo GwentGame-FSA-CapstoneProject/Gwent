@@ -30,11 +30,28 @@ export default class GameHandler {
             console.log("GameState: " + this.gameState);
         }
 
-        this.totalStrength = (fieldArray) => {
-            const reducerfunc = (accu, currentUnit) => {
+        this.totalStrength = (close, range, siege) => {
+            const reducer = (accu, currentUnit) => {
                 return accu + currentUnit.strength
             }
-            return fieldArray.reduce(reducerfunc, 0)
+            let total = 0;
+            const weather = scene.WeatherHandler;
+            
+            if(weather.frost) 
+                total += close.length;
+            else
+                total += close.reduce(reducer, 0);
+            if(weather.fog === true || weather.storm === true) 
+                total += range.length;
+            else
+                total += range.reduce(reducer, 0);
+            if(weather.rain === true || weather.storm === true) 
+                total += siege.length;
+            else
+                total += siege.reduce(reducer, 0);
+
+            console.log('total:', total);
+            return total;
         }
 
         this.endOfRound = (playerStr, OpponentStr) => {
@@ -42,12 +59,24 @@ export default class GameHandler {
             let playerWon = false;
             if(playerStr > OpponentStr){
                 playerWon = true;
-                console.log('player won the round!')
+                console.log('you won the round!')
                 this.playerRoundWins += 1;
                 scene.socket.emit('playerWon', scene.socket.id);
             } else if (OpponentStr > playerStr){
                 console.log('you lost the round!')
                 this.opponentRoundWins += 1;
+            }else {
+                console.log('A draw!');
+                this.playerRoundWins += 1;
+                this.opponentRoundWins += 1;
+                if(this.opponentRoundWins > 1){
+                    scene.scene.start('GameLost'); 
+                }else if (this.playerRoundWins > 1 ){
+                    scene.scene.start('GameWon');
+                }else{
+                    scene.socket.emit('draw', scene.socket.id);
+                }
+
             }
             this.playerField = [];
             this.opponentField = [];

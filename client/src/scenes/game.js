@@ -3,6 +3,7 @@ import SocketHandler from "../helpers/socketHandler";
 import DeckHandler from "../helpers/DeckHandler";
 import InteractiveHandler from "../helpers/InteractiveHandler";
 import UIHandler from "../helpers/UIHandler";
+import WeatherHandler from "../helpers/WeatherHandler";
 import cardsArray from "../cards/cardClass";
 
 export default class Game extends Phaser.Scene {
@@ -41,6 +42,7 @@ export default class Game extends Phaser.Scene {
     this.UIHandler = new UIHandler(this);
     this.UIHandler.buildUI();
     this.InteractiveHandler = new InteractiveHandler(this);
+    this.WeatherHandler = new WeatherHandler(this);
 
   }
 

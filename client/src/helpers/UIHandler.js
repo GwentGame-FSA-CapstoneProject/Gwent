@@ -14,11 +14,16 @@ export default class UIHandler {
             scene.drawCard = scene.add.text(370, 1030, "Click here to start!").setFontSize(42).setInteractive();
 
             scene.passTurn = scene.add.text(1100, 590, "Pass Turn").setFontSize(25).setInteractive().setColor('#00ffff');
+            //need text to display that weather is on
         }
 
         this.buildUI = () => {
             this.buildZones();
             this.buildGameText();
+        }
+
+        this.clearWeather = () => {
+            //set all weather text invisible
         }
 
     }
