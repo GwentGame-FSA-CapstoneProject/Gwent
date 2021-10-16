@@ -14,10 +14,10 @@ export default class Game extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image("albrich", "/assets/albrich.png");
-    this.load.image("cow", "/assets/cow.png");
-    this.load.image("cardback", "/assets/cardback.png");
-    this.load.image("board", "/assets/board.jpg");
+    this.load.image("albrich", "assets/albrich.png");
+    this.load.image("cow", "assets/cow.png");
+    this.load.image("cardback", "assets/cardback.png");
+    this.load.image("board", "assets/board.jpg");
     this.load.image("botchling", "assets/botchling.png");
     this.load.image("gaunt_odimm", "assets/gaunt_odimm.png");
     this.load.image("bovine_defense_force", "assets/bovine_defense_force.png");
@@ -30,7 +30,11 @@ export default class Game extends Phaser.Scene {
     this.load.image("vesemir", "assets/vesemir.png");
     this.load.image("zoltan", "assets/zoltan.png");
 
-    //load other cards
+    this.load.image("clear_weather", "../assets/clear_weather.png");
+    this.load.image("biting_frost", "../assets/biting_frost.png");
+    this.load.image("torrential_rain", "../assets/torrential_rain.png");
+    this.load.image("skellige_storm", "../assets/skellige_storm.png");
+    this.load.image("impenetrable_fog", "../assets/impenetrable_fog.png");
   }
 
   create() {

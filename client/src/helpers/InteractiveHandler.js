@@ -13,7 +13,7 @@ export default class InteractiveHandler {
         scene.input.on('pointerout', (event, gameObjects) => {
             // if(gameObjects[0].type === "Image" && gameObjects[0].data.list.name)
             //     console.log(gameObjects[0].data.list.name);
-
+    
             if (gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardback") {
                 scene.cardPreview.setVisible(false);
             }
@@ -70,51 +70,57 @@ export default class InteractiveHandler {
         })
 
         scene.input.on("drop", function (pointer, gameObject, dropZone) {
-
-            let card = {};
             let gameHandler = scene.GameHandler;
+            if (gameHandler.isMyTurn && gameHandler.gameState === 'Ready' && gameHandler.playerPassed === false){
+                let weather = ['biting_frost', 'clear_weather', 'impenetrable_fog', 'skellige_storm', 'torrential_rain'];
+                if(weather.includes(gameObject.data.values.name)){
+                    scene.WeatherHandler.weatherPlayed(gameObject.data.values.name);
+                    scene.socket.emit('cardPlayed', gameObject.data.values.name, scene.socket.id);
+                    gameObject.setVisible(false).setInteractive(false);//destroying them causes a bug
+                }else{
+                    let card = {};
 
-            if(!scene.GameHandler.playerPassed)
-            for(let i = 0; i<cardsArray.length; i++){
-                if(cardsArray[i].name===gameObject.texture.key){
-                     card = cardsArray[i]
+                    if(!gameHandler.playerPassed)
+                    for(let i = 0; i<cardsArray.length; i++){
+                        if(cardsArray[i].name===gameObject.texture.key){
+                            card = cardsArray[i]
+                        }
+                    }
+
+                    let yValue;
+                    let xOffset;
+                    gameObject.inPlay=true
+
+                    switch (card.row) {
+                        case 'Close':
+                            yValue = 670;
+                            gameHandler.playerClose.push(card);
+                            xOffset = gameHandler.playerClose.length;
+                            break;
+                        case 'Range':
+                            yValue = 770;
+                            gameHandler.playerRange.push(card);
+                            xOffset = gameHandler.playerRange.length;
+                            break;
+                        case 'Siege':
+                            yValue = 875;
+                            gameHandler.playerSiege.push(card);
+                            xOffset = gameHandler.playerSiege.length;
+                            break;
+                        default:
+                        console.log(`InteractiveHandler Switch Statement Problem`);
+                    }
+                    gameHandler.playerField.push(card);
+                    gameObject.x = dropZone.x - 340 + xOffset * 70;
+                    gameObject.y = yValue;
+                    gameObject.setCrop(0, 0, 300, 370); //removes bottom text on card
+                    scene.socket.emit('cardPlayed', gameObject.data.values.name, scene.socket.id);
+                    scene.input.setDraggable(gameObject, false);
                 }
-            }
-
-            if (scene.GameHandler.isMyTurn && gameHandler.gameState === 'Ready' && gameHandler.playerPassed === false){
-                let yValue;
-                let xOffset;
-                gameObject.inPlay=true
-
-                switch (card.row) {
-                    case 'Close':
-                        yValue = 670;
-                        gameHandler.playerClose.push(card);
-                        xOffset = gameHandler.playerClose.length;
-                        break;
-                    case 'Range':
-                        yValue = 770;
-                        gameHandler.playerRange.push(card);
-                        xOffset = gameHandler.playerRange.length;
-                        break;
-                    case 'Siege':
-                        yValue = 875;
-                        gameHandler.playerSiege.push(card);
-                        xOffset = gameHandler.playerSiege.length;
-                        break;
-                    default:
-                      console.log(`InteractiveHandler Switch Statement Problem`);
-                }
-                gameHandler.playerField.push(card);
-                gameObject.x = dropZone.x - 340 + xOffset * 70;
-                gameObject.y = yValue;
-                gameObject.setCrop(0, 0, 300, 370); //removes bottom text on card
-                scene.socket.emit('cardPlayed', gameObject.data.values.name, scene.socket.id);
-                scene.input.setDraggable(gameObject, false);
             }else{
                 gameObject.x = gameObject.input.dragStartX;
                 gameObject.y = gameObject.input.dragStartY;
             }
-          });
+        });
     }
 }

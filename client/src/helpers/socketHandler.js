@@ -77,39 +77,43 @@ export default class SocketHandler {
 
         scene.socket.on('cardPlayed', (cardName, socketId) => { //shows where opponent card goes
             if (socketId !== scene.socket.id) {
-                let card = {};
+                let weather = ['biting_frost', 'clear_weather', 'impenetrable_fog', 'skellige_storm', 'torrential_rain'];
+                if(weather.includes(cardName)){
+                    scene.WeatherHandler.weatherPlayed(cardName);
+                }else{
+                    let card = {};
 
-                for(let i = 0 ; i<cardsArray.length; i++){
-                    if(cardsArray[i].name === cardName){
-                        card = cardsArray[i]
+                    for(let i = 0 ; i<cardsArray.length; i++){
+                        if(cardsArray[i].name === cardName){
+                            card = cardsArray[i]
+                        }
                     }
-                }
-                let yValue;
-                let xOffset = 0;
-                switch (card.row) {
-                    case 'Close':
-                        yValue = 560;
-                        scene.GameHandler.opponentClose.push(card);
-                        xOffset = scene.GameHandler.opponentClose.length;
-                    break;
-                    case 'Range':
-                        yValue = 458;
-                        scene.GameHandler.opponentRange.push(card);
-                        xOffset = scene.GameHandler.opponentRange.length;
+                    let yValue;
+                    let xOffset = 0;
+                    switch (card.row) {
+                        case 'Close':
+                            yValue = 560;
+                            scene.GameHandler.opponentClose.push(card);
+                            xOffset = scene.GameHandler.opponentClose.length;
                         break;
-                    case 'Siege':
-                        yValue = 355;
-                        scene.GameHandler.opponentSiege.push(card);
-                        xOffset = scene.GameHandler.opponentSiege.length;
-                    break;
-                    default:
-                    console.log(`SocketHandler Switch Statement Problem`);
+                        case 'Range':
+                            yValue = 458;
+                            scene.GameHandler.opponentRange.push(card);
+                            xOffset = scene.GameHandler.opponentRange.length;
+                            break;
+                        case 'Siege':
+                            yValue = 355;
+                            scene.GameHandler.opponentSiege.push(card);
+                            xOffset = scene.GameHandler.opponentSiege.length;
+                        break;
+                        default:
+                        console.log(`SocketHandler Switch Statement Problem`);
+                    }
+
+                        scene.GameHandler.opponentField.push(card)
+                        scene.GameHandler.opponentHand.shift().destroy();
+                        scene.DeckHandler.dealCard(425 + 70 * xOffset, yValue, cardName, "opponentCard").setCrop(0, 0, 300, 370).inPlay =true ;
                 }
-
-                    scene.GameHandler.opponentField.push(card)
-                    scene.GameHandler.opponentHand.shift().destroy();
-                    scene.DeckHandler.dealCard(425 + 70 * xOffset, yValue, cardName, "opponentCard").setCrop(0, 0, 300, 370).inPlay =true ;
-
             }
         })
     }

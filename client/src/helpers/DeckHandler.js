@@ -1,6 +1,8 @@
 import {BovineDF, Albrich, Cow, Dandelion,
 EmilRegis, Gaunt, GauntDarkness, Botchling,
-Vesemir, ZoltonChivay, CardBack} from '../cards/cardClass';
+Vesemir, ZoltonChivay, CardBack, BitingFrost,
+ClearWeather, ImpenetrableFog, SkelligeStorm,
+TorrentialRain} from '../cards/cardClass';
 
 
 export default class DeckHandler {
@@ -18,6 +20,11 @@ export default class DeckHandler {
                 bovine_defense_force: new BovineDF(scene),
                 vesemir: new Vesemir(scene),
                 zoltan: new ZoltonChivay(scene),
+                biting_frost: new BitingFrost(scene),
+                clear_weather: new ClearWeather(scene),
+                impenetrable_fog: new ImpenetrableFog(scene),
+                skellige_storm: new SkelligeStorm(scene),
+                torrential_rain: new TorrentialRain(scene)
             }
             let newCard = cards[name];
             return(newCard.render(x, y, type));
