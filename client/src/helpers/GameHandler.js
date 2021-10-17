@@ -86,6 +86,7 @@ export default class GameHandler {
             this.playerClose = [];
             this.playerRange = [];
             this.playerSiege = [];
+            scene.WeatherHandler.clearWeather();
             if(playerWon){
                 this.isMyTurn = true;
             }else{

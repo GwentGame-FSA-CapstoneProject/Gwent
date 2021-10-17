@@ -34,16 +34,14 @@ export default class SocketHandler {
         })
 
         scene.socket.on('passTurn', (socketId) => {
-            console.log("****passed*****", socketId);
+            console.log("passed:", socketId);
             //this method isnt currently doing anything but might be needed when more...
-            //...than one game is running depending on how the socket implementation works
+            //...than one game is running depending on how the socket implementation is done
         })
 
         scene.socket.on('endRound', () => {
             console.log("End of Round placeholder");
-            //let playerStr =  scene.GameHandler.totalStrength(scene.GameHandler.playerField)
             let playerStr = gameHandler.totalStrength(gameHandler.playerClose, gameHandler.playerRange, gameHandler.playerSiege);
-            //let opponentStr = scene.GameHandler.totalStrength(scene.GameHandler.opponentField)
             let opponentStr = gameHandler.totalStrength(gameHandler.opponentClose, gameHandler.opponentRange, gameHandler.opponentSiege);
             scene.GameHandler.endOfRound(playerStr, opponentStr)
             for(let i=0;i<scene.children.list.length;i++){
