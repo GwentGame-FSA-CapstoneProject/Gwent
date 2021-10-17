@@ -19,7 +19,7 @@ export default class Game extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div className="gamewindow">
         <div id="phaser-example" />
       </div>
     );

@@ -55,4 +55,6 @@ const middleware = composeEnhancers(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );
 
-export default createStore(reducer, middleware);
+const store = createStore(reducer, middleware);
+
+export default store;
