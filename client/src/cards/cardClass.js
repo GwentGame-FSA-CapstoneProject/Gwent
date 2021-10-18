@@ -115,10 +115,10 @@ export class Botchling extends Card {
 export class Vesemir extends Card {
   constructor(scene) {
     super(scene);
-    this.name = "vesemir",
-    this.strength = 6,
-    this.type = 'Unit',
-    this.row = "Close",
+    this.name = "vesemir"
+    this.strength = 6
+    this.type = 'Unit'
+    this.row = "Close"
     this.image = "vesemir"
   }
 }
@@ -126,11 +126,51 @@ export class Vesemir extends Card {
 export class ZoltonChivay extends Card {
   constructor(scene) {
     super(scene);
-    this.name = "zoltan",
-    this.strength = 5,
+    this.name = "zoltan"
+    this.strength = 5
     this.type = 'Unit'
     this.row = "Close"
     this.image = "zoltan"
+  }
+}
+
+export class BitingFrost extends Card {
+  constructor(scene){
+    super(scene);
+    this.name = 'biting_frost'
+    this.image = 'biting_frost'
+  }
+}
+
+export class ClearWeather extends Card {
+  constructor(scene){
+    super(scene);
+    this.name = 'clear_weather'
+    this.image = 'clear_weather'
+  }
+}
+
+export class ImpenetrableFog extends Card {
+  constructor(scene){
+    super(scene);
+    this.name = 'impenetrable_fog'
+    this.image = 'impenetrable_fog'
+  }
+}
+
+export class SkelligeStorm extends Card {
+  constructor(scene){
+    super(scene);
+    this.name = 'skellige_storm'
+    this.image = 'skellige_storm'
+  }
+}
+
+export class TorrentialRain extends Card {
+  constructor(scene){
+    super(scene);
+    this.name = 'torrential_rain'
+    this.image = 'torrential_rain'
   }
 }
 
@@ -145,11 +185,17 @@ let gaunter_odimm_darkness = new GauntDarkness()
 let botchling = new Botchling()
 let vesemir = new Vesemir()
 let zoltan = new ZoltonChivay()
+let biting_frost = new BitingFrost()
+let clear_weather = new ClearWeather()
+let impenetrable_fog = new ImpenetrableFog()
+let skellige_storm = new SkelligeStorm()
+let torrential_rain = new TorrentialRain()
 
 const cardsArray = [
   cardback, bovine_defense_force, albrich, cow, dandelion,
   emiel_regis, gaunt_odimm, gaunter_odimm_darkness, botchling,
-  vesemir, zoltan
+  vesemir, zoltan, biting_frost, clear_weather, impenetrable_fog,
+  skellige_storm, torrential_rain
 ]
 
 export default cardsArray

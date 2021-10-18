@@ -40,7 +40,8 @@ io.on('connection', function (socket) {
     }
 
     socket.on('sendDeck', function (socketId) {
-        players[socketId].inDeck = shuffle(['albrich', 'cow','botchling','gaunt_odimm','bovine_defense_force','dandelion','emiel_regis','gaunter_odimm_darkness','vesemir','zoltan']); //***need to put whole deck here I think*/
+        players[socketId].inDeck = shuffle(['albrich', 'cow','botchling','gaunt_odimm','bovine_defense_force','dandelion','emiel_regis', 'skellige_storm',
+                                            'gaunter_odimm_darkness','vesemir','zoltan', 'biting_frost', 'clear_weather', 'impenetrable_fog', 'torrential_rain']); 
         //console.log(players);
         if(Object.keys(players).length < 2) return;
         io.emit('changeGameState', "Initializing"); //might need extra check to stop spectators restarting game
@@ -49,7 +50,7 @@ io.on('connection', function (socket) {
     socket.on('drawCard', function (socketId) {
         for(let i = 0; i < 10; i++){
         if (players[socketId].inDeck.length === 0) {
-            players[socketId].inDeck = shuffle(["albrich", "cow",'botchling','gaunt_odimm','bovine_defense_force','dandelion','emiel_regis','gaunter_odimm_darkness','vesemir','zoltan']);
+            players[socketId].inDeck = shuffle(["albrich", "cow",'botchling','gaunt_odimm','bovine_defense_force','dandelion','emiel_regis', 'gaunter_odimm_darkness','vesemir','zoltan']);
         }
         players[socketId].inHand.push(players[socketId].inDeck.shift());
     }
@@ -90,8 +91,15 @@ io.on('connection', function (socket) {
     socket.on('playerWon', function (socketId) {
         players[socketId].roundsWon++;
         console.log(players[socket.id].roundsWon);
-        if (players[socketId].roundsWon===2){
-            io.emit('endGame',socketId)
+        if (players[socketId].roundsWon === 2){
+            io.emit('endGame', socketId)
         }
+    });
+
+    socket.on('draw', function (socketId) {
+        players[socketId].roundsWon++;
+
+        if(players[socketId].isPlayerA)
+            io.emit('yourTurn', socketId)
     });
 });
