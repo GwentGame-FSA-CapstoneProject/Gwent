@@ -2,6 +2,15 @@ const express = require("express");
 const app = require("express")();
 const shuffle = require("shuffle-array");
 const path = require("path");
+var uuid = require("uuid-random");
+
+const {
+  uniqueNamesGenerator,
+  adjectives,
+  colors,
+  animals,
+  names,
+} = require("unique-names-generator");
 
 let PORT = process.env.PORT || 5000;
 
@@ -20,6 +29,8 @@ let gameState = "Initializing";
 let players = {};
 let readyCheck = 0;
 let passed = 0;
+let chatRoomData = [];
+let connectedClients = {};
 
 const io = require("socket.io")(server);
 
@@ -116,4 +127,61 @@ io.on("connection", function (socket) {
       io.emit("endGame", socketId);
     }
   });
+
+  //Client Sent a message
+  socket.on("SendMessage", (messageData) => {
+    chatRoomData.push(messageData);
+    sendUpdatedChatRoomData(socket);
+  });
+
+  //Client entered The chat Room
+  socket.on("UserEnteredRoom", (userData) => {
+    var enteredRoomMessage = {
+      message: `${userData.username} has entered the chat`,
+      username: "",
+      userID: 0,
+      timeStamp: null,
+    };
+    chatRoomData.push(enteredRoomMessage);
+    sendUpdatedChatRoomData(socket);
+    connectedClients[socket.id] = userData;
+  });
+
+  //Creating identity for new connected user
+  socket.on("CreateUserData", () => {
+    let userID = uuid();
+    let username = uniqueNamesGenerator({ dictionaries: [adjectives, names] });
+    var userData = { userID: userID, username: username };
+    socket.emit("SetUserData", userData);
+  });
+
+  //Player Disconnecting from chat room...
+  socket.on("disconnecting", (data) => {
+    console.log("Client disconnecting...");
+
+    if (connectedClients[socket.id]) {
+      var leftRoomMessage = {
+        message: `${connectedClients[socket.id].username} has left the chat`,
+        username: "",
+        userID: 0,
+        timeStamp: null,
+      };
+      chatRoomData.push(leftRoomMessage);
+      sendUpdatedChatRoomData(socket);
+      delete connectedClients[socket.id];
+    }
+  });
+
+  //Clearing Chat room data from server
+  socket.on("ClearChat", () => {
+    chatRoomData = [];
+    console.log(chatRoomData);
+    sendUpdatedChatRoomData(socket);
+  });
 });
+
+//Sending update chat room data to all connected clients
+function sendUpdatedChatRoomData(client) {
+  client.emit("RetrieveChatRoomData", chatRoomData);
+  client.broadcast.emit("RetrieveChatRoomData", chatRoomData);
+}
