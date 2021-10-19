@@ -6,6 +6,7 @@ const PLAYER1_ROUND_WIN = "PLAYER1_ROUND_WIN";
 const PLAYER2_ROUND_WIN = "PLAYER2_ROUND_WIN";
 const START_GAME = "START_GAME";
 const END_GAME = "END_GAME";
+const PLAYER_HAND = "PLAYER_HAND";
 export const startGame = () => {
   return {
     type: START_GAME,
@@ -26,6 +27,13 @@ export const player1WinsRound = () => {
 export const player2WinsRound = () => {
   return {
     type: PLAYER2_ROUND_WIN,
+  };
+};
+
+export const playerHand = (hand) => {
+  return {
+    type: PLAYER_HAND,
+    hand,
   };
 };
 
@@ -55,4 +63,6 @@ const middleware = composeEnhancers(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
 );
 
-export default createStore(reducer, middleware);
+const store = createStore(reducer, middleware);
+
+export default store;
