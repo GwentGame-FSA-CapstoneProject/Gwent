@@ -7,33 +7,76 @@ const {
   names,
 } = require("unique-names-generator");
 
-let gameState = "Initializing";
-let players = {};
-let readyCheck = 0;
-let passed = 0;
 let chatRoomData = [];
 let connectedClients = {};
+
+const playerInstance = (socketId) => {
+  return {
+    id: socketId,
+    inDeck: [],
+    inHand: [],
+    isPlayerA: false,
+    isPlayerB: false, //not being used currently
+    roundsWon: 0,
+    roundsLost: 0,
+  };
+}
+
+const roomInstance = () => {
+    return {
+      players: [],
+      readyCheck: 0,
+      passed: 0,
+      gameState: 'not ready'
+    }
+}
+
+let gameRooms = new Map();
+
+let hashMapSocketIdToRoomIdRelation = new Map()
+
+for(let i = 0; i < 10; i++){
+  gameRooms.set(i, roomInstance(i))
+}
+
+// TODO: Handle player disconnection. We need to remove them from the room and tell the other player
+
+let roomId = 0
 
 module.exports = io => {
   io.on("connection", function (socket) {
     console.log("A user connected: " + socket.id);
+    let currentRoom = gameRooms.get(roomId);
+    let roomPlayers = currentRoom.players;
 
-    players[socket.id] = {
-      inDeck: [],
-      inHand: [],
-      isPlayerA: false,
-      isPlayerB: false, //not being used currently
-      roundsWon: 0,
-      roundsLost: 0,
-    };
+    // console.log('currentRoom', currentRoom, currentRoom.players)
 
-    if (Object.keys(players).length < 2) {
-      players[socket.id].isPlayerA = true;
-      io.emit("firstTurn");
+    if (roomPlayers.length < 2) {
+      socket.join(roomId);
+      currentRoom.players.push(playerInstance(socket.id));
+      hashMapSocketIdToRoomIdRelation.set(socket.id, roomId)
+    } else {
+      roomId++
+      console.log('creating a new room...', roomId)
+      let currentRoom = gameRooms.get(roomId);
+      currentRoom.players.push(playerInstance(socket.id));
+      socket.join(roomId)
+      hashMapSocketIdToRoomIdRelation.set(socket.id, roomId)
     }
 
+      if (currentRoom.players.length < 2) {
+        currentRoom.players[0].isPlayerA = true;
+        io.emit("firstTurn");
+      }
+
+      // console.log('ROOOOOOOMS', gameRooms);
+
     socket.on("sendDeck", function (socketId) {
-      players[socketId].inDeck = shuffle([
+      let roomId = hashMapSocketIdToRoomIdRelation.get(socketId)
+      let players = gameRooms.get(roomId).players;
+      let selectedPlayer = players.find(player => player.id === socketId);
+
+      selectedPlayer.inDeck = shuffle([
         "albrich",
         "cow",
         "botchling",
@@ -45,15 +88,28 @@ module.exports = io => {
         "vesemir",
         "zoltan",
       ]); //***need to put whole deck here I think*/
-      //console.log(players);
+
       if (Object.keys(players).length < 2) return;
       io.emit("changeGameState", "Initializing"); //might need extra check to stop spectators restarting game
     });
 
     socket.on("drawCard", function (socketId) {
+      console.log('server drawCard', socketId);
+      let roomId = hashMapSocketIdToRoomIdRelation.get(socket.id)
+      let selectedRoom = gameRooms.get(roomId);
+      let players = selectedRoom.players;
+      let selectedPlayer = players.find(player => player.id === socketId);
+      console.log('selectedPlayer',selectedPlayer)
+
+      // check that the player has cards in the deck
+      if (selectedPlayer.inDeck.length > 0) {
+        // room readyCheck and increment 1
+        selectedRoom.readyCheck++;
+      }
+
       for (let i = 0; i < 10; i++) {
-        if (players[socketId].inDeck.length === 0) {
-          players[socketId].inDeck = shuffle([
+        if (selectedPlayer.inDeck.length === 0) {
+          selectedPlayer.inDeck = shuffle([
             "albrich",
             "cow",
             "botchling",
@@ -66,30 +122,37 @@ module.exports = io => {
             "zoltan",
           ]);
         }
-        players[socketId].inHand.push(players[socketId].inDeck.shift());
+        selectedPlayer.inHand.push(selectedPlayer.inDeck.shift());
       }
-      io.emit("drawCard", socketId, players[socketId].inHand);
-      readyCheck++;
+
+      io.emit("drawCard", socketId, selectedPlayer.inHand);
+
+      let readyCheck = gameRooms.get(roomId).readyCheck;
+
+      console.log('what the hell is readyCheck', readyCheck);
       if (readyCheck >= 2) {
-        gameState = "Ready";
+        selectedRoom.gameState = "Ready";
         io.emit("changeGameState", "Ready");
       }
     });
 
     socket.on("cardPlayed", function (cardName, socketId) {
+      console.log('Server on cardPlayed', cardName, socketId)
       io.emit("cardPlayed", cardName, socketId);
-
-      if (passed < 1) io.emit("changeTurn");
+      let roomId = hashMapSocketIdToRoomIdRelation.get(socketId)
+      let currentRoom = gameRooms.get(roomId);
+      if (currentRoom.passed < 1) io.emit("changeTurn");
     });
 
     socket.on("disconnect", function () {
       console.log("A user disconnected: " + socket.id);
-      delete players[socket.id];
+      delete selectedPlayer;
     });
 
     socket.on("passTurn", function (socketId) {
-      passed++;
-      if (passed > 1) {
+      let currentRoom = gameRooms.get(roomId);
+      currentRoom.passed++;
+      if (currentRoom.passed > 1) {
         console.log("End of round");
         io.emit("endRound");
       } else {
@@ -98,7 +161,8 @@ module.exports = io => {
     });
 
     socket.on("endRound", function () {
-      passed = 0;
+      let currentRoom = gameRooms.get(roomId);
+      currentRoom.passed = 0;
     });
 
     socket.on("playerWon", function (socketId) {

@@ -13,7 +13,7 @@ export default class InteractiveHandler {
         scene.input.on('pointerout', (event, gameObjects) => {
             // if(gameObjects[0].type === "Image" && gameObjects[0].data.list.name)
             //     console.log(gameObjects[0].data.list.name);
-    
+
             if (gameObjects[0].type === "Image" && gameObjects[0].data.list.name !== "cardback") {
                 scene.cardPreview.setVisible(false);
             }
@@ -71,6 +71,7 @@ export default class InteractiveHandler {
 
         scene.input.on("drop", function (pointer, gameObject, dropZone) {
             let gameHandler = scene.GameHandler;
+            console.log('drop in interactiveHandler', gameHandler.isMyTurn, gameHandler.gameState, gameHandler.playerPassed)
             if (gameHandler.isMyTurn && gameHandler.gameState === 'Ready' && gameHandler.playerPassed === false){
                 let weather = ['biting_frost', 'clear_weather', 'impenetrable_fog', 'skellige_storm', 'torrential_rain'];
                 if(weather.includes(gameObject.data.values.name)){
