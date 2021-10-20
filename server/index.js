@@ -63,7 +63,12 @@ io.on("connection", function (socket) {
       "gaunter_odimm_darkness",
       "vesemir",
       "zoltan",
-    ]); //***need to put whole deck here I think*/
+      "clear_weather",
+      "torrential_rain",
+      "skellige_storm",
+      "impenetrable_fog",
+      "biting_frost"
+    ]); 
     //console.log(players);
     if (Object.keys(players).length < 2) return;
     io.emit("changeGameState", "Initializing"); //might need extra check to stop spectators restarting game
@@ -83,6 +88,11 @@ io.on("connection", function (socket) {
           "gaunter_odimm_darkness",
           "vesemir",
           "zoltan",
+          "clear_weather",
+          "torrential_rain",
+          "skellige_storm",
+          "impenetrable_fog",
+          "biting_frost"
         ]);
       }
       players[socketId].inHand.push(players[socketId].inDeck.shift());

@@ -76,7 +76,7 @@ export default class InteractiveHandler {
                 if(weather.includes(gameObject.data.values.name)){
                     scene.WeatherHandler.weatherPlayed(gameObject.data.values.name);
                     scene.socket.emit('cardPlayed', gameObject.data.values.name, scene.socket.id);
-                    gameObject.setVisible(false).setInteractive(false);//destroying them causes a bug
+                    gameObject.setVisible(false).setInteractive(false);//destroying them causes a bug with the pointer off function
                 }else{
                     let card = {};
 

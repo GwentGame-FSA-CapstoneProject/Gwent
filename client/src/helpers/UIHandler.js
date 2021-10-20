@@ -15,16 +15,28 @@ export default class UIHandler {
 
             scene.passTurn = scene.add.text(1100, 590, "Pass Turn").setFontSize(25).setInteractive().setColor('#00ffff');
             
-            //these ar ekind of ugly, they serve their purpose for now though 
+            //these are kind of ugly, they serve their purpose for now though 
             scene.frost = scene.add.text(460, 560, "Biting Frost: Each Close unit (both players) set to 1 strength.").setColor('#FF5F1F').setVisible(false);
             scene.fog = scene.add.text(460, 460, "Impenetrable Fog: Each Range unit (both players) set to 1 strength.").setColor('#FF5F1F').setVisible(false);
             scene.rain = scene.add.text(460, 360, "Torrential Rain: Each Siege unit (both players) set to 1 strength.").setColor('#FF5F1F').setVisible(false);
             scene.storm = scene.add.text(460, 260, "Skellige Storm: Each Range and Siege unit (both players) set to 1 strength.").setColor('#FF5F1F').setVisible(false);
         }
 
+        this.buildGameInfo = () => {
+            scene.playerSiegeValue = scene.add.text(393, 850, "0").setFontSize(42)
+            scene.playerRangeValue = scene.add.text(393, 745, "0").setFontSize(42)
+            scene.playerCloseValue = scene.add.text(393, 645, '0').setFontSize(42)
+            scene.playerTotalValue = scene.add.text(45, 680, 'total strength: 0').setFontSize(21)
+            scene.opponentSiegeValue = scene.add.text(393, 330, "0").setFontSize(42)
+            scene.opponentRangeValue = scene.add.text(393, 433, "0").setFontSize(42)
+            scene.opponentCloseValue = scene.add.text(393, 535, "0").setFontSize(42)
+            scene.opponentTotalValue = scene.add.text(45, 500, 'total strength: 0').setFontSize(21)
+        }
+
         this.buildUI = () => {
             this.buildZones();
             this.buildGameText();
+            this.buildGameInfo();
         }
 
     }
