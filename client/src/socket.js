@@ -1,9 +1,9 @@
 import { io } from "socket.io-client";
 
-const socket = io();
+const chatsocket = io("/chatroom");
 
-socket.on("connect", () => {
-  console.log("I am now connected to the server!");
+chatsocket.on("connect", () => {
+  console.log("Chat activated!");
 });
 
-export default socket;
+export default chatsocket;
