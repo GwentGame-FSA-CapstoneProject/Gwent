@@ -10,7 +10,7 @@ import CurrentUserText from "../components/CurrentUserText";
 import OtherUserText from "../components/OtherUserText";
 import ChatNotification from "../components/ChatNotification";
 
-import socket from "../src/socket";
+import chatsocket from "../src/socket";
 
 let styles = {
   chatRoomContainer: {
@@ -87,7 +87,7 @@ class ChatRoom extends React.Component {
     let usernameVal = localStorage.getItem("username");
 
     if (!userIDVal) {
-      socket.on("SetUserData", (userData) => {
+      chatsocket.on("SetUserData", (userData) => {
         //When user creation on server is complete, retrieve and save data to local storage
         localStorage.setItem("userID", userData.userID);
         localStorage.setItem("username", userData.username);
@@ -99,20 +99,20 @@ class ChatRoom extends React.Component {
         });
 
         //Notify Socket server is not ready to chat
-        socket.emit("UserEnteredRoom", userData);
+        chatsocket.emit("UserEnteredRoom", userData);
       });
 
       //Send Socket command to create user info for current user
-      socket.emit("CreateUserData");
+      chatsocket.emit("CreateUserData");
     } else {
       //If user already has userid and username, notify server to allow them to join chat
       this.setState({ currentUsername: usernameVal, currentUserID: userIDVal });
-      socket.emit("UserEnteredRoom", {
+      chatsocket.emit("UserEnteredRoom", {
         userID: userIDVal,
         username: usernameVal,
       });
     }
-    socket.on("RetrieveChatRoomData", (chatRoomData) => {
+    chatsocket.on("RetrieveChatRoomData", (chatRoomData) => {
       this.setState({ chatRoomData: chatRoomData }, () =>
         this.shouldScrollToBottom()
       );
@@ -120,8 +120,8 @@ class ChatRoom extends React.Component {
   }
 
   componentWillUnmount() {
-    socket.off("RetrieveChatRoomData");
-    socket.off("SetUserData");
+    chatsocket.off("RetrieveChatRoomData");
+    chatsocket.off("SetUserData");
   }
 
   setMessage(message) {
@@ -134,7 +134,7 @@ class ChatRoom extends React.Component {
 
     if (message.length > 0) {
       //Send chat message to server...
-      socket.emit("SendMessage", {
+      chatsocket.emit("SendMessage", {
         message: message,
         username: currentUsername,
         userID: currentUserID,

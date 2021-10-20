@@ -127,8 +127,10 @@ io.on("connection", function (socket) {
       io.emit("endGame", socketId);
     }
   });
+});
 
-  //Client Sent a message
+io.of("/chatroom").on("connection", (socket) => {
+  //Client sends a message
   socket.on("SendMessage", (messageData) => {
     chatRoomData.push(messageData);
     sendUpdatedChatRoomData(socket);
@@ -179,7 +181,6 @@ io.on("connection", function (socket) {
     sendUpdatedChatRoomData(socket);
   });
 });
-
 //Sending update chat room data to all connected clients
 function sendUpdatedChatRoomData(client) {
   client.emit("RetrieveChatRoomData", chatRoomData);
