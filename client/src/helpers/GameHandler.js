@@ -30,6 +30,24 @@ export default class GameHandler {
             console.log("GameState: " + this.gameState);
         }
 
+        this.rowStrength = (row, rowType) => {
+            const reducer = (accu, currentUnit) => {
+                return accu + currentUnit.strength
+            }
+    
+            const weather = scene.WeatherHandler;
+            switch(rowType){
+                case 'close':
+                    return (weather.frost ? row.length : row.reduce(reducer, 0));
+                case 'range':
+                    return ((weather.fog || weather.storm) ? row.length : row.reduce(reducer, 0));
+                case 'siege':
+                    return ((weather.rain || weather.storm) ? row.length : row.reduce(reducer, 0));
+                default:
+                    console.log('Error: GameHandler rowStrength passed invalid row type.');
+            }
+        }
+
         this.totalStrength = (close, range, siege) => {
             const reducer = (accu, currentUnit) => {
                 return accu + currentUnit.strength
@@ -55,7 +73,6 @@ export default class GameHandler {
         }
 
         this.endOfRound = (playerStr, OpponentStr) => {
-            //add tie game later
             let playerWon = false;
             if(playerStr > OpponentStr){
                 playerWon = true;
