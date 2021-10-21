@@ -39,9 +39,16 @@ for(let i = 0; i < 10; i++){
   gameRooms.set(i, roomInstance(i))
 }
 
+let roomId = 0;
+
 // TODO: Handle player disconnection. We need to remove them from the room and tell the other player
 
-let roomId = 0
+// Helper function to extract players in a room
+const getRoomPlayers = (socketId) => {
+  const roomId = hashMapSocketIdToRoomIdRelation.get(socketId);
+  const room = gameRooms.get(roomId);
+  return room.players;
+}
 
 module.exports = io => {
   io.on("connection", function (socket) {
@@ -54,12 +61,14 @@ module.exports = io => {
     if (roomPlayers.length < 2) {
       socket.join(roomId);
       currentRoom.players.push(playerInstance(socket.id));
+      currentRoom.players[0].isPlayerA = true;
       hashMapSocketIdToRoomIdRelation.set(socket.id, roomId)
     } else {
       roomId++
       console.log('creating a new room...', roomId)
       let currentRoom = gameRooms.get(roomId);
       currentRoom.players.push(playerInstance(socket.id));
+      currentRoom.players[0].isPlayerA = true;
       socket.join(roomId)
       hashMapSocketIdToRoomIdRelation.set(socket.id, roomId)
     }
@@ -129,7 +138,6 @@ module.exports = io => {
 
       let readyCheck = gameRooms.get(roomId).readyCheck;
 
-      console.log('what the hell is readyCheck', readyCheck);
       if (readyCheck >= 2) {
         selectedRoom.gameState = "Ready";
         io.emit("changeGameState", "Ready");
@@ -166,9 +174,14 @@ module.exports = io => {
     });
 
     socket.on("playerWon", function (socketId) {
-      players[socketId].roundsWon++;
-      console.log(players[socket.id].roundsWon);
-      if (players[socketId].roundsWon === 2) {
+      const players = getRoomPlayers(socketId);
+
+      const playerWhoWon = players.find(player => player.id === socketId);
+      playerWhoWon.roundsWon++;
+
+      console.log('rounds won', playerWhoWon.roundsWon, 'for player', playerWhoWon.id);
+
+      if (playerWhoWon.roundsWon === 2) {
         io.emit("endGame", socketId);
       }
     });
