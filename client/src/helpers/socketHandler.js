@@ -12,6 +12,10 @@ export default class SocketHandler {
             scene.socket.emit('sendDeck', scene.socket.id);
         })
 
+        scene.socket.on('opponentDisconnect', () => {
+                scene.scene.start('GameWonDisconnect');
+        })
+
         scene.socket.on('firstTurn', () => {
             gameHandler.changeTurn();
         })
