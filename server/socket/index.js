@@ -62,23 +62,24 @@ module.exports = io => {
       socket.join(roomId);
       currentRoom.players.push(playerInstance(socket.id));
       currentRoom.players[0].isPlayerA = true;
-      hashMapSocketIdToRoomIdRelation.set(socket.id, roomId)
+      hashMapSocketIdToRoomIdRelation.set(socket.id, roomId);
+
+      if (currentRoom.players.length === 1) {
+        io.emit("firstTurn");
+      }
+
     } else {
       roomId++
       console.log('creating a new room...', roomId)
       let currentRoom = gameRooms.get(roomId);
       currentRoom.players.push(playerInstance(socket.id));
       currentRoom.players[0].isPlayerA = true;
-      socket.join(roomId)
+      io.emit("firstTurn");
+      socket.join(roomId);
       hashMapSocketIdToRoomIdRelation.set(socket.id, roomId)
     }
 
-      if (currentRoom.players.length < 2) {
-        currentRoom.players[0].isPlayerA = true;
-        io.emit("firstTurn");
-      }
-
-      // console.log('ROOOOOOOMS', gameRooms);
+      // console.log('ROOOOOOOMS', currentRoom.players);
 
     socket.on("sendDeck", function (socketId) {
       let roomId = hashMapSocketIdToRoomIdRelation.get(socketId)
