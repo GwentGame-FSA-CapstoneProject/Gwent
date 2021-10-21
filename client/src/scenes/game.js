@@ -15,6 +15,7 @@ export default class Game extends Phaser.Scene {
 
   preload() {
     this.load.image("albrich", "assets/albrich.png");
+    this.load.image("rules", "assets/rules.png");
     this.load.image("cow", "assets/cow.png");
     this.load.image("cardback", "assets/cardback.png");
     this.load.image("board", "assets/board.jpg");

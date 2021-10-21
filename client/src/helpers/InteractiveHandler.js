@@ -19,6 +19,30 @@ export default class InteractiveHandler {
             }
         });
 
+        scene.rules.on('pointerover', () => {
+            scene.rules.setColor('Red');
+            scene.rulesPreview = scene.add.image(640, 600,'rules').setScale(.5,.5)
+        })
+
+        scene.rules.on('pointerout', () => {
+            scene.rules.setColor('DarkRed');
+            scene.rulesPreview.setVisible(false)
+        })
+
+        scene.drawCard.on('pointerdown', () => {                //start game button (referred to as drawCard)
+            scene.socket.emit('drawCard', scene.socket.id);
+            scene.drawCard.disableInteractive();
+            scene.drawCard.setVisible(false);
+        })
+
+        scene.drawCard.on('pointerover', () => {
+            scene.drawCard.setColor('#ff69b4');
+        })
+
+        scene.drawCard.on('pointerout', () => {
+            scene.drawCard.setColor('#00ffff')
+        })
+
         scene.passTurn.on('pointerdown', () => {              //pass turn button
             if(scene.GameHandler.isMyTurn){
                 scene.socket.emit('passTurn', scene.socket.id);
