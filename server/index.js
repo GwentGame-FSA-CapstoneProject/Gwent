@@ -137,7 +137,15 @@ io.on("connection", function (socket) {
       io.emit("endGame", socketId);
     }
   });
+
+  socket.on('draw', function (socketId) {
+    players[socketId].roundsWon++;
+  
+    if(players[socketId].isPlayerA)
+        io.emit('yourTurn', socketId)
+  });
 });
+
 
 io.of("/chatroom").on("connection", (socket) => {
   //Client sends a message
