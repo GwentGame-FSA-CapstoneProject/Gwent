@@ -35,11 +35,12 @@ let gameRooms = new Map();
 
 let hashMapSocketIdToRoomIdRelation = new Map()
 
-for(let i = 0; i < 10; i++){
-  gameRooms.set(i, roomInstance(i))
-}
+// for(let i = 0; i < 10; i++){
+//   gameRooms.set(i, roomInstance(i))
+// }
 
 let roomId = 0;
+gameRooms.set(roomId, roomInstance(roomId))
 
 // TODO: Handle player disconnection. We need to remove them from the room and tell the other player
 
@@ -70,6 +71,8 @@ module.exports = io => {
 
     } else {
       roomId++
+      gameRooms.set(roomId, roomInstance(roomId))
+      console.log('ROOOOOOOMS', gameRooms);
       console.log('creating a new room...', roomId)
       let currentRoom = gameRooms.get(roomId);
       currentRoom.players.push(playerInstance(socket.id));
@@ -79,7 +82,6 @@ module.exports = io => {
       hashMapSocketIdToRoomIdRelation.set(socket.id, roomId)
     }
 
-      // console.log('ROOOOOOOMS', currentRoom.players);
 
     socket.on("sendDeck", function (socketId) {
       let roomId = hashMapSocketIdToRoomIdRelation.get(socketId)
@@ -147,10 +149,10 @@ module.exports = io => {
 
     socket.on("cardPlayed", function (cardName, socketId) {
       console.log('Server on cardPlayed', cardName, socketId)
-      io.emit("cardPlayed", cardName, socketId);
       let roomId = hashMapSocketIdToRoomIdRelation.get(socketId)
+      io.to(roomId).emit("cardPlayed", cardName, socketId);
       let currentRoom = gameRooms.get(roomId);
-      if (currentRoom.passed < 1) io.emit("changeTurn");
+      if (currentRoom.passed < 1) io.to(roomId).emit("changeTurn");
     });
 
     socket.on("disconnect", function () {
