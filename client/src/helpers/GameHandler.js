@@ -49,29 +49,9 @@ export default class GameHandler {
         }
 
         this.totalStrength = (close, range, siege) => {
-            const reducer = (accu, currentUnit) => {
-                return accu + currentUnit.strength
-            }
-            let total = 0;
-            const weather = scene.WeatherHandler;
-            
-            if(weather.frost) 
-                total += close.length;
-            else
-                total += close.reduce(reducer, 0);
-            if(weather.fog === true || weather.storm === true) 
-                total += range.length;
-            else
-                total += range.reduce(reducer, 0);
-            if(weather.rain === true || weather.storm === true) 
-                total += siege.length;
-            else
-                total += siege.reduce(reducer, 0);
-
-            console.log('total:', total);
-            return total;
+            return this.rowStrength(close, 'close') + this.rowStrength(range, 'range') + this.rowStrength(siege, 'siege');
         }
-
+        
         this.endOfRound = (playerStr, OpponentStr) => {
             let playerWon = false;
             if(playerStr > OpponentStr){
