@@ -23,6 +23,8 @@ export default class GameHandler {
                 this.isMyTurn = !this.isMyTurn;
                 console.log("isMyTurn: " + this.isMyTurn);
             }
+            if(this.isMyTurn)
+                scene.UIHandler.yourTurn();
         }
 
         this.changeGameState = (gameState) => {

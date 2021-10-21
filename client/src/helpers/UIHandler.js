@@ -14,6 +14,8 @@ export default class UIHandler {
             scene.drawCard = scene.add.text(370, 1030, "Click here to start!").setFontSize(42).setInteractive();
 
             scene.passTurn = scene.add.text(1100, 590, "Pass Turn").setFontSize(25).setInteractive().setColor('#00ffff');
+
+            scene.yourTurn = scene.add.text(600, 950, "Your Turn").setFontSize(32).setVisible(false);
             
             //these are kind of ugly, they serve their purpose for now though 
             scene.frost = scene.add.text(460, 560, "Biting Frost: Each Close unit (both players) set to 1 strength.").setColor('#FF5F1F').setVisible(false);
@@ -44,6 +46,14 @@ export default class UIHandler {
             scene.opponentRangeValue.setText(rowStr(gameHandler.opponentRange, 'range'));
             scene.playerTotalValue.setText(`total strength: ${gameHandler.totalStrength(gameHandler.playerClose, gameHandler.playerRange, gameHandler.playerSiege)}`);
             scene.opponentTotalValue.setText(`total strength: ${gameHandler.totalStrength(gameHandler.opponentClose, gameHandler.opponentRange, gameHandler.opponentSiege)}`);
+        }
+
+        this.yourTurn = () => {
+            scene.yourTurn.setVisible(true);
+
+            setTimeout(function(){
+                scene.yourTurn.setVisible(false)
+            }, 1500)
         }
 
         this.buildUI = () => {
