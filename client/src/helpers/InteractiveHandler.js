@@ -19,20 +19,6 @@ export default class InteractiveHandler {
             }
         });
 
-        scene.drawCard.on('pointerdown', () => {                //start gamne button (referred to as drawCard)
-            scene.socket.emit('drawCard', scene.socket.id);
-            scene.drawCard.disableInteractive();
-            scene.drawCard.setVisible(false);
-        })
-
-        scene.drawCard.on('pointerover', () => {
-            scene.drawCard.setColor('#ff69b4');
-        })
-
-        scene.drawCard.on('pointerout', () => {
-            scene.drawCard.setColor('#00ffff')
-        })
-
         scene.passTurn.on('pointerdown', () => {              //pass turn button
             if(scene.GameHandler.isMyTurn){
                 scene.socket.emit('passTurn', scene.socket.id);
