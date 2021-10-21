@@ -17,11 +17,13 @@ export default class SocketHandler {
         })
 
         scene.socket.on('yourTurn', (socketId) => {
+            console.log('got turn')
             if (socketId === scene.socket.id)
                 scene.GameHandler.isMyTurn = true;
         })
 
         scene.socket.on('changeGameState', (gameState) => {
+            console.log('receiving new gamestate', gameState)
             gameHandler.changeGameState(gameState);
             if(gameState === 'Initializing'){
                 scene.DeckHandler.dealCard(1138, 703, 'cardback', 'opponentCard'); //this is called opponent card so it isnt draggable, is technically your deck i
@@ -65,7 +67,7 @@ export default class SocketHandler {
 
         })
 
-        scene.socket.on('endGame',(socketId)=>{
+        scene.socket.on('endGame', (socketId) => {
             if (socketId === scene.socket.id) {
                 scene.scene.start('GameWon')
             }else {
