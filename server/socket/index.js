@@ -35,10 +35,6 @@ let gameRooms = new Map();
 
 let hashMapSocketIdToRoomIdRelation = new Map()
 
-// for(let i = 0; i < 10; i++){
-//   gameRooms.set(i, roomInstance(i))
-// }
-
 let roomId = 0;
 gameRooms.set(roomId, roomInstance(roomId))
 
