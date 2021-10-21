@@ -12,6 +12,10 @@ export default class SocketHandler {
             scene.socket.emit('sendDeck', scene.socket.id);
         })
 
+        scene.socket.on('opponentDisconnect', () => {
+                scene.scene.start('GameWonDisconnect');
+        })
+
         scene.socket.on('firstTurn', () => {
             gameHandler.changeTurn();
         })
@@ -28,6 +32,7 @@ export default class SocketHandler {
             if(gameState === 'Initializing'){
                 scene.DeckHandler.dealCard(1138, 703, 'cardback', 'opponentCard'); //this is called opponent card so it isnt draggable, is technically your deck i
                 scene.DeckHandler.dealCard(1138, 498, 'cardback', 'opponentCard');
+                scene.socket.emit('drawCard', scene.socket.id);
             }
         })
 

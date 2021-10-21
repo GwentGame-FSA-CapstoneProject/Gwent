@@ -18,6 +18,7 @@ export default class GameLost extends Phaser.Scene
      fontSize: 90,
      color: 'DarkRed'
    }).setOrigin(0.5)
+  
   //  this.add.text(1100,200,"Press space to play again!",{
   //    fontSize: 25
   //  }).setOrigin(0.5)

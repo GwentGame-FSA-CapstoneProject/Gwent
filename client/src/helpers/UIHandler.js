@@ -11,8 +11,6 @@ export default class UIHandler {
         }
 
         this.buildGameText = () => {
-            scene.drawCard = scene.add.text(370, 1030, "Click here to start!").setFontSize(42).setInteractive();
-
             scene.passTurn = scene.add.text(1100, 590, "Pass Turn").setFontSize(25).setInteractive().setColor('#00ffff');
 
             scene.yourTurn = scene.add.text(600, 950, "Your Turn").setFontSize(32).setVisible(false);
@@ -52,14 +50,6 @@ export default class UIHandler {
             scene.opponentTotalValue.setText(`total strength: ${gameHandler.totalStrength(gameHandler.opponentClose, gameHandler.opponentRange, gameHandler.opponentSiege)}`);
             scene.playerRoundsWon.setText(`Rounds Won: ${gameHandler.playerRoundWins}`)
             scene.opponentRoundWon.setText(`Rounds Won: ${gameHandler.opponentRoundWins}`)
-        }
-
-        this.yourTurn = () => {
-            scene.yourTurn.setVisible(true);
-
-            setTimeout(function(){
-                scene.yourTurn.setVisible(false)
-            }, 1500)
         }
 
         this.buildUI = () => {

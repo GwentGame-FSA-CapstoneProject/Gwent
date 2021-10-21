@@ -48,6 +48,7 @@ export default class InteractiveHandler {
                 scene.socket.emit('passTurn', scene.socket.id);
                 scene.GameHandler.playerPassed = true;
                 scene.passTurn.disableInteractive().setVisible(false);
+                scene.yourTurn.setVisible(false);
             }
         })
 
