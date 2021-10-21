@@ -20,9 +20,3 @@ const server = app.listen(PORT, function () {
 const io = socketio(server);
 require("./socket")(io)
 
-/*socket.on('draw', function (socketId) {
-  players[socketId].roundsWon++;
-
-  if(players[socketId].isPlayerA)
-      io.emit('yourTurn', socketId)
-});*/

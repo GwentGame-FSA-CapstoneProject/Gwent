@@ -184,6 +184,13 @@ module.exports = io => {
         io.emit("endGame", socketId);
       }
     });
+    socket.on('draw', function (socketId) {
+      let players = getRoomPlayers(socketId)
+      let selectedPlayer = players.find(player => player.id === socketId);
+      selectedPlayer.roundsWon++;
+      if(selectedPlayer.isPlayerA)
+          io.emit('yourTurn', socketId)
+    });
   });
 
   io.of("/chatroom").on("connection", (socket) => {
