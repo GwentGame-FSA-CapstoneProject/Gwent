@@ -46,14 +46,6 @@ export default class UIHandler {
             scene.opponentTotalValue.setText(`total strength: ${gameHandler.totalStrength(gameHandler.opponentClose, gameHandler.opponentRange, gameHandler.opponentSiege)}`);
         }
 
-        this.yourTurn = () => {
-            scene.yourTurn.setVisible(true);
-
-            setTimeout(function(){
-                scene.yourTurn.setVisible(false)
-            }, 1500)
-        }
-
         this.buildUI = () => {
             this.buildZones();
             this.buildGameText();

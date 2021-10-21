@@ -21,8 +21,6 @@ export default class GameHandler {
         this.changeTurn = () => {
             if(this.playerPassed === false){
                 this.isMyTurn = !this.isMyTurn;
-                if(this.isMyTurn)
-                    scene.UIHandler.yourTurn();
             }
         }
 

@@ -50,5 +50,7 @@ export default class Game extends Phaser.Scene {
 
   }
 
-  update() {}
+  update() {
+    this.GameHandler.isMyTurn ? this.yourTurn.setVisible(true) : this.yourTurn.setVisible(false);
+  }
 }
