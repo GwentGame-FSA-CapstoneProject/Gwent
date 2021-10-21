@@ -48,6 +48,8 @@ export default class UIHandler {
             scene.opponentRangeValue.setText(rowStr(gameHandler.opponentRange, 'range'));
             scene.playerTotalValue.setText(`total strength: ${gameHandler.totalStrength(gameHandler.playerClose, gameHandler.playerRange, gameHandler.playerSiege)}`);
             scene.opponentTotalValue.setText(`total strength: ${gameHandler.totalStrength(gameHandler.opponentClose, gameHandler.opponentRange, gameHandler.opponentSiege)}`);
+            scene.playerRoundsWon.setText(`Rounds Won: ${gameHandler.playerRoundWins}`)
+            scene.opponentRoundWon.setText(`Rounds Won: ${gameHandler.opponentRoundWins}`)
         }
 
         this.yourTurn = () => {
