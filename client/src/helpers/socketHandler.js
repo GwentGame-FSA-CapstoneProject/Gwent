@@ -17,6 +17,7 @@ export default class SocketHandler {
         })
 
         scene.socket.on('yourTurn', (socketId) => {
+            console.log('got turn')
             if (socketId === scene.socket.id)
                 scene.GameHandler.isMyTurn = true;
         })

@@ -157,13 +157,14 @@ module.exports = io => {
     });
 
     socket.on("passTurn", function (socketId) {
+      let roomId = hashMapSocketIdToRoomIdRelation.get(socketId)
       let currentRoom = gameRooms.get(roomId);
       currentRoom.passed++;
       if (currentRoom.passed > 1) {
         console.log("End of round");
-        io.emit("endRound");
+        io.to(roomId).emit("endRound");
       } else {
-        io.emit("changeTurn");
+        io.to(roomId).emit("changeTurn");
       }
     });
 
@@ -183,6 +184,15 @@ module.exports = io => {
       if (playerWhoWon.roundsWon === 2) {
         io.emit("endGame", socketId);
       }
+    });
+
+    socket.on('draw', function (socketId) {
+      const players = getRoomPlayers(socketId);
+      players[0].roundsWon++;
+      players[1].roundsWon++;
+
+      let roomId = hashMapSocketIdToRoomIdRelation.get(socketId)
+        io.to(roomId).emit('yourTurn', players[0].id)
     });
   });
 
