@@ -62,7 +62,7 @@ module.exports = io => {
       hashMapSocketIdToRoomIdRelation.set(socket.id, roomId);
 
       if (currentRoom.players.length === 1) {
-        io.emit("firstTurn");
+        io.to(roomId).emit("firstTurn");
       }
 
     } else {
@@ -73,7 +73,7 @@ module.exports = io => {
       let currentRoom = gameRooms.get(roomId);
       currentRoom.players.push(playerInstance(socket.id));
       currentRoom.players[0].isPlayerA = true;
-      io.emit("firstTurn");
+      io.to(roomId).emit("firstTurn");
       socket.join(roomId);
       hashMapSocketIdToRoomIdRelation.set(socket.id, roomId)
     }
@@ -100,7 +100,7 @@ module.exports = io => {
         "skellige_storm",
         "impenetrable_fog",
         "biting_frost"
-      ]); 
+      ]);
 
       if (Object.keys(players).length < 2) return;
       io.emit("changeGameState", "Initializing"); //might need extra check to stop spectators restarting game
@@ -143,13 +143,13 @@ module.exports = io => {
         selectedPlayer.inHand.push(selectedPlayer.inDeck.shift());
       }
 
-      io.emit("drawCard", socketId, selectedPlayer.inHand);
+      io.to(roomId).emit("drawCard", socketId, selectedPlayer.inHand);
 
       let readyCheck = gameRooms.get(roomId).readyCheck;
 
       if (readyCheck >= 2) {
         selectedRoom.gameState = "Ready";
-        io.emit("changeGameState", "Ready");
+        io.to(roomId).emit("changeGameState", "Ready");
       }
     });
 
@@ -192,7 +192,8 @@ module.exports = io => {
       console.log('rounds won', playerWhoWon.roundsWon, 'for player', playerWhoWon.id);
 
       if (playerWhoWon.roundsWon === 2) {
-        io.emit("endGame", socketId);
+        let roomId = hashMapSocketIdToRoomIdRelation.get(socketId)
+        io.to(roomId).emit("endGame", socketId);
       }
     });
 
