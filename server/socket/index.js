@@ -95,7 +95,12 @@ module.exports = io => {
         "gaunter_odimm_darkness",
         "vesemir",
         "zoltan",
-      ]); //***need to put whole deck here I think*/
+        "clear_weather",
+        "torrential_rain",
+        "skellige_storm",
+        "impenetrable_fog",
+        "biting_frost"
+      ]); 
 
       if (Object.keys(players).length < 2) return;
       io.emit("changeGameState", "Initializing"); //might need extra check to stop spectators restarting game
