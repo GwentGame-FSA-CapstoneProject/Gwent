@@ -19,7 +19,17 @@ export default class InteractiveHandler {
             }
         });
 
-        scene.drawCard.on('pointerdown', () => {                //start gamne button (referred to as drawCard)
+        scene.rules.on('pointerover', () => {
+            scene.rules.setColor('Red');
+            scene.rulesPreview = scene.add.image(640, 600,'rules').setScale(.5,.5)
+        })
+
+        scene.rules.on('pointerout', () => {
+            scene.rules.setColor('DarkRed');
+            scene.rulesPreview.setVisible(false)
+        })
+
+        scene.drawCard.on('pointerdown', () => {                //start game button (referred to as drawCard)
             scene.socket.emit('drawCard', scene.socket.id);
             scene.drawCard.disableInteractive();
             scene.drawCard.setVisible(false);

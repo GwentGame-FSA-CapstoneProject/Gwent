@@ -17,6 +17,8 @@ export default class UIHandler {
 
             scene.yourTurn = scene.add.text(600, 950, "Your Turn").setFontSize(32).setVisible(false);
 
+            scene.rules = scene.add.text(10,870,'Rules of Gwent').setFontSize(30).setInteractive().setColor('DarkRed')
+
             //these are kind of ugly, they serve their purpose for now though
             scene.frost = scene.add.text(460, 560, "Biting Frost: Each Close unit (both players) set to 1 strength.").setColor('#FF5F1F').setVisible(false);
             scene.fog = scene.add.text(460, 460, "Impenetrable Fog: Each Range unit (both players) set to 1 strength.").setColor('#FF5F1F').setVisible(false);
