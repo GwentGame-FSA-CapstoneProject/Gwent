@@ -78,6 +78,7 @@ export default class SocketHandler {
                 let weather = ['biting_frost', 'clear_weather', 'impenetrable_fog', 'skellige_storm', 'torrential_rain'];
                 if(weather.includes(cardName)){
                     scene.WeatherHandler.weatherPlayed(cardName);
+                    scene.UIHandler.updateGameInfo();
                 }else{
                     let card = {};
 
@@ -110,6 +111,7 @@ export default class SocketHandler {
 
                         scene.GameHandler.opponentField.push(card)
                         scene.GameHandler.opponentHand.shift().destroy();
+                        scene.UIHandler.updateGameInfo();
                         scene.DeckHandler.dealCard(425 + 70 * xOffset, yValue, cardName, "opponentCard").setCrop(0, 0, 300, 370).inPlay =true ;
                 }
             }
