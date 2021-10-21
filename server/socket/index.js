@@ -128,6 +128,11 @@ module.exports = io => {
             "gaunter_odimm_darkness",
             "vesemir",
             "zoltan",
+            "clear_weather",
+            "torrential_rain",
+            "skellige_storm",
+            "impenetrable_fog",
+            "biting_frost"
           ]);
         }
         selectedPlayer.inHand.push(selectedPlayer.inDeck.shift());
@@ -157,13 +162,14 @@ module.exports = io => {
     });
 
     socket.on("passTurn", function (socketId) {
+      let roomId = hashMapSocketIdToRoomIdRelation.get(socketId)
       let currentRoom = gameRooms.get(roomId);
       currentRoom.passed++;
       if (currentRoom.passed > 1) {
         console.log("End of round");
-        io.emit("endRound");
+        io.to(roomId).emit("endRound");
       } else {
-        io.emit("changeTurn");
+        io.to(roomId).emit("changeTurn");
       }
     });
 
@@ -184,12 +190,14 @@ module.exports = io => {
         io.emit("endGame", socketId);
       }
     });
+
     socket.on('draw', function (socketId) {
-      let players = getRoomPlayers(socketId)
-      let selectedPlayer = players.find(player => player.id === socketId);
-      selectedPlayer.roundsWon++;
-      if(selectedPlayer.isPlayerA)
-          io.emit('yourTurn', socketId)
+      const players = getRoomPlayers(socketId);
+      players[0].roundsWon++;
+      players[1].roundsWon++;
+
+      let roomId = hashMapSocketIdToRoomIdRelation.get(socketId)
+        io.to(roomId).emit('yourTurn', players[0].id)
     });
   });
 
