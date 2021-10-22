@@ -88,6 +88,7 @@ export default class InteractiveHandler {
                 if(weather.includes(gameObject.data.values.name)){
                     scene.WeatherHandler.weatherPlayed(gameObject.data.values.name);
                     scene.socket.emit('cardPlayed', gameObject.data.values.name, scene.socket.id);
+                    console.log('cardPlayed', gameObject.data.values.name, scene.socket.id)
                     scene.UIHandler.updateGameInfo();
                     gameObject.setVisible(false).setInteractive(false);//destroying them causes a bug with the pointer off function
                 }else{
@@ -128,6 +129,7 @@ export default class InteractiveHandler {
                     gameObject.y = yValue;
                     gameObject.setCrop(0, 0, 300, 370); //removes bottom text on card
                     scene.socket.emit('cardPlayed', gameObject.data.values.name, scene.socket.id);
+                    console.log('cardPlayed', gameObject.data.values.name, scene.socket.id)
                     scene.UIHandler.updateGameInfo();
                     scene.input.setDraggable(gameObject, false);
                 }

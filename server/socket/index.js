@@ -178,7 +178,8 @@ module.exports = io => {
       }
     });
 
-    socket.on("endRound", function () {
+    socket.on("endRound", function (socketId) {
+      let roomId = hashMapSocketIdToRoomIdRelation.get(socketId)
       let currentRoom = gameRooms.get(roomId);
       currentRoom.passed = 0;
     });
