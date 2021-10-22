@@ -190,7 +190,7 @@ export class VernonRoche extends Card {
     this.name = 'vernon_roche',
     this.strength = 10,
     this.type = 'Unit',
-    this.row = "Siege",
+    this.row = "Close",
     this.image = 'vernon_roche'
   }
 }
