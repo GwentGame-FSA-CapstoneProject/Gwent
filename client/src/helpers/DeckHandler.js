@@ -2,7 +2,8 @@ import {BovineDF, Albrich, Cow, Dandelion,
 EmilRegis, Gaunt, GauntDarkness, Botchling,
 Vesemir, ZoltonChivay, CardBack, BitingFrost,
 ClearWeather, ImpenetrableFog, SkelligeStorm,
-TorrentialRain} from '../cards/cardClass';
+TorrentialRain, Ballista, KeiraMetz, PhilippaEilhart,
+SiegeTower, Trebuchet, VernonRoche} from '../cards/cardClass';
 
 
 export default class DeckHandler {
@@ -24,7 +25,13 @@ export default class DeckHandler {
                 clear_weather: new ClearWeather(scene),
                 impenetrable_fog: new ImpenetrableFog(scene),
                 skellige_storm: new SkelligeStorm(scene),
-                torrential_rain: new TorrentialRain(scene)
+                torrential_rain: new TorrentialRain(scene),
+                ballista: new Ballista(scene),
+                keira_metz: new KeiraMetz(scene),
+                philippa_eilhart: new PhilippaEilhart(scene),
+                siege_tower: new SiegeTower(scene),
+                trebuchet: new Trebuchet(scene),
+                vernon_roche: new VernonRoche(scene)
             }
             let newCard = cards[name];
             return(newCard.render(x, y, type));

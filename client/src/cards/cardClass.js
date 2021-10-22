@@ -133,7 +133,67 @@ export class ZoltonChivay extends Card {
     this.image = "zoltan"
   }
 }
+export class Ballista extends Card {
+  constructor(scene){
+    super(scene);
+    this.name = 'ballista',
+    this.strength = 6,
+    this.type = 'Unit',
+    this.row = "Siege",
+    this.image = 'ballista'
+  }
+}
+export class KeiraMetz extends Card {
+  constructor(scene){
+    super(scene);
+    this.name = 'keira_metz',
+    this.strength = 5,
+    this.type = 'Unit',
+    this.row = "Range",
+    this.image = 'keira_metz'
+  }
+}
+export class PhilippaEilhart extends Card {
+  constructor(scene){
+    super(scene);
+    this.name = 'philippa_eilhart',
+    this.strength = 10,
+    this.type = 'Unit',
+    this.row = "Range",
+    this.image = 'philippa_eilhart'
+  }
+}
+export class SiegeTower extends Card {
+  constructor(scene){
+    super(scene);
+    this.name = 'siege_tower',
+    this.strength = 6,
+    this.type = 'Unit',
+    this.row = "Siege",
+    this.image = 'siege_tower'
+  }
+}
+export class Trebuchet extends Card {
+  constructor(scene){
+    super(scene);
+    this.name = 'trebuchet',
+    this.strength = 6,
+    this.type = 'Unit',
+    this.row = "Siege",
+    this.image = 'trebuchet'
+  }
+}
 
+export class VernonRoche extends Card {
+  constructor(scene){
+    super(scene);
+    this.name = 'vernon_roche',
+    this.strength = 6,
+    this.type = 'Unit',
+    this.row = "Siege",
+    this.image = 'vernon_roche'
+  }
+}
 export class BitingFrost extends Card {
   constructor(scene){
     super(scene);
@@ -190,12 +250,19 @@ let clear_weather = new ClearWeather()
 let impenetrable_fog = new ImpenetrableFog()
 let skellige_storm = new SkelligeStorm()
 let torrential_rain = new TorrentialRain()
+let ballista = new Ballista()
+let keira_metz = new KeiraMetz()
+let philippa_eilhart = new PhilippaEilhart()
+let siege_tower = new SiegeTower()
+let trebuchet = new Trebuchet()
+let vernon_roche = new VernonRoche()
 
 const cardsArray = [
   cardback, bovine_defense_force, albrich, cow, dandelion,
   emiel_regis, gaunt_odimm, gaunter_odimm_darkness, botchling,
   vesemir, zoltan, biting_frost, clear_weather, impenetrable_fog,
-  skellige_storm, torrential_rain
+  skellige_storm, torrential_rain, ballista, keira_metz, philippa_eilhart,
+  siege_tower, trebuchet, vernon_roche
 ]
 
 export default cardsArray
