@@ -38,6 +38,12 @@ export default class Game extends Phaser.Scene {
     this.load.image("impenetrable_fog", "../assets/impenetrable_fog.png");
     this.load.audio("draw",'../assets/draw.wav')
     this.load.audio("soundtrack",'../assets/soundtrack.mp3')
+    this.load.image("ballista", "../assets/ballista.png");
+    this.load.image("keira_metz", "../assets/keira_metz.png");
+    this.load.image("philippa_eilhart", "../assets/philippa_eilhart.png");
+    this.load.image("siege_tower", "../assets/siege_tower.png");
+    this.load.image("trebuchet", "../assets/trebuchet.png");
+    this.load.image("vernon_roche", "../assets/vernon_roche.png");git
   }
 
   create() {

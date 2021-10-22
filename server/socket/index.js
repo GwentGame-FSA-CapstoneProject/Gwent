@@ -99,7 +99,13 @@ module.exports = io => {
         "torrential_rain",
         "skellige_storm",
         "impenetrable_fog",
-        "biting_frost"
+        "biting_frost",
+        "ballista",
+        "keira_metz",
+        "philippa_eilhart",
+        "siege_tower",
+        "trebuchet",
+        "vernon_roche"
       ]);
 
       if (Object.keys(players).length < 2) return;
