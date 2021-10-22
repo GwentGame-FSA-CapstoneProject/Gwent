@@ -73,9 +73,9 @@ module.exports = io => {
       let currentRoom = gameRooms.get(roomId);
       currentRoom.players.push(playerInstance(socket.id));
       currentRoom.players[0].isPlayerA = true;
-      io.to(roomId).emit("firstTurn");
       socket.join(roomId);
       hashMapSocketIdToRoomIdRelation.set(socket.id, roomId)
+      io.to(roomId).emit("firstTurn");
     }
 
 
