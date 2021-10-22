@@ -4,7 +4,7 @@ import Game from "./Game";
 const Lobby = () => {
   return (
     <div className="container">
-      <h3>Welcome to the lobby!</h3>
+      <h3>Time to play the game!</h3>
       <Game />
     </div>
   );
