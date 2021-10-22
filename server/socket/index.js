@@ -103,7 +103,7 @@ module.exports = io => {
       ]);
 
       if (Object.keys(players).length < 2) return;
-      io.emit("changeGameState", "Initializing"); //might need extra check to stop spectators restarting game
+      io.to(roomId).emit("changeGameState", "Initializing"); //might need extra check to stop spectators restarting game
     });
 
     socket.on("drawCard", function (socketId) {
