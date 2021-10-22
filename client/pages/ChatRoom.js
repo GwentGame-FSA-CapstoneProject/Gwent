@@ -178,7 +178,9 @@ class ChatRoom extends React.Component {
     let { chatRoomData, currentUsername } = this.state;
 
     return (
-      <div style={styles.div}>
+      <div style={styles.div} style={{
+        backgroundImage: `url("https://i.redd.it/rqmwcqbtrxz51.png")`
+      }}>
         <Container style={styles.chatRoomContainer}>
           <Container style={styles.header}>
             <Row style={styles.headerText}>Chat Room</Row>
