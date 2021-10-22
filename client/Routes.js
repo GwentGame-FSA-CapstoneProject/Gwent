@@ -9,13 +9,9 @@ class Routes extends Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route exact path="/chatroom">
-            <ChatRoom />
-          </Route>
-
-          <Route exact path="/clearChat">
-            <ClearChat />
-          </Route>
+          <Route exact path="/chatroom" component={ChatRoom} />
+          <Route exact path="/" component={ChatRoom} />
+          <Route exact path="/clearChat" component={ClearChat} />
           <Route path="/lobby" component={Lobby} />
           <Redirect to="lobby" />
         </Switch>

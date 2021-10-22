@@ -1,10 +1,10 @@
 import React from "react";
-// import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SendIcon from "@material-ui/icons/Send";
-import { Row, Container } from "react-bootstrap";
+import { Row, Container, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import CurrentUserText from "../components/CurrentUserText";
 import OtherUserText from "../components/OtherUserText";
@@ -13,6 +13,10 @@ import ChatNotification from "../components/ChatNotification";
 import chatsocket from "../src/socket";
 
 let styles = {
+  div: {
+    display: "flex",
+    justifyContent: "space-around",
+  },
   chatRoomContainer: {
     marginTop: 10,
   },
@@ -47,7 +51,7 @@ let styles = {
     flexDirection: "column",
     height: "75vh",
     overflowY: "auto",
-    width: "45vw",
+    width: "50vw",
     alignSelf: "center",
     padding: 20,
     paddingBottom: 40,
@@ -65,6 +69,9 @@ let styles = {
   },
   messageSubmitButton: {
     flex: 0,
+  },
+  button: {
+    backgroundColor: "red",
   },
 };
 
@@ -171,72 +178,79 @@ class ChatRoom extends React.Component {
     let { chatRoomData, currentUsername } = this.state;
 
     return (
-      <Container style={styles.chatRoomContainer}>
-        <Container style={styles.header}>
-          <Row style={styles.headerText}>Chat Room</Row>
-          <Row style={styles.youAppearAsText}>
-            You appear as
-            <div style={styles.usernameText}> {currentUsername}</div>
-            in chat
-          </Row>
-        </Container>
+      <div style={styles.div}>
+        <Container style={styles.chatRoomContainer}>
+          <Container style={styles.header}>
+            <Row style={styles.headerText}>Chat Room</Row>
+            <Row style={styles.youAppearAsText}>
+              You appear as
+              <div style={styles.usernameText}> {currentUsername}</div>
+              in chat
+            </Row>
+          </Container>
 
-        <Container style={styles.chatThread} ref={this.messagesEndRef}>
-          {chatRoomData.map((messageData, index) => {
-            if (messageData.username == currentUsername) {
-              return (
-                <CurrentUserText
-                  key={index}
-                  username={messageData.username}
-                  message={messageData.message}
-                />
-              );
-            } else if (messageData.username == "") {
-              return (
-                <ChatNotification
-                  key={index}
-                  username={messageData.username}
-                  message={messageData.message}
-                />
-              );
-            } else {
-              return (
-                <OtherUserText
-                  key={index}
-                  username={messageData.username}
-                  message={messageData.message}
-                />
-              );
-            }
-          })}
-        </Container>
-
-        <Container style={styles.messageInputSection}>
-          <TextField
-            style={styles.messageTextField}
-            id="input-with-icon-adornment"
-            label="Enter Message"
-            variant="outlined"
-            value={this.state.message}
-            onChange={(event) => this.setMessage(event.target.value)}
-            onKeyPress={(event) => {
-              if (event.key === "Enter") {
-                console.log("Enter key pressed");
-                this.sendMessageData();
+          <Container style={styles.chatThread} ref={this.messagesEndRef}>
+            {chatRoomData.map((messageData, index) => {
+              if (messageData.username == currentUsername) {
+                return (
+                  <CurrentUserText
+                    key={index}
+                    username={messageData.username}
+                    message={messageData.message}
+                  />
+                );
+              } else if (messageData.username == "") {
+                return (
+                  <ChatNotification
+                    key={index}
+                    username={messageData.username}
+                    message={messageData.message}
+                  />
+                );
+              } else {
+                return (
+                  <OtherUserText
+                    key={index}
+                    username={messageData.username}
+                    message={messageData.message}
+                  />
+                );
               }
-            }}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton onClick={() => this.sendMessageData()}>
-                    <SendIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
+            })}
+          </Container>
+
+          <Container style={styles.messageInputSection}>
+            <TextField
+              style={styles.messageTextField}
+              id="input-with-icon-adornment"
+              label="Enter Message"
+              variant="outlined"
+              value={this.state.message}
+              onChange={(event) => this.setMessage(event.target.value)}
+              onKeyPress={(event) => {
+                if (event.key === "Enter") {
+                  console.log("Enter key pressed");
+                  this.sendMessageData();
+                }
+              }}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => this.sendMessageData()}>
+                      <SendIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+          </Container>
         </Container>
-      </Container>
+        <Link to="/lobby">
+          <Button variant="primary" style={styles.button}>
+            Play the Game!
+          </Button>
+        </Link>
+      </div>
     );
   }
 }
