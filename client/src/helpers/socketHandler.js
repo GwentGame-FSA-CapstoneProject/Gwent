@@ -37,6 +37,7 @@ export default class SocketHandler {
         })
 
         scene.socket.on('changeTurn', () => {
+            console.log('received changeTurn')
             gameHandler.changeTurn();
         })
 
@@ -56,7 +57,7 @@ export default class SocketHandler {
                     scene.children.list[i].setVisible(false)
                 }
             }
-            scene.socket.emit('endRound');
+            scene.socket.emit('endRound', scene.socket.id);
         })
 
         scene.socket.on('drawCard', (socketId, cards) => {
