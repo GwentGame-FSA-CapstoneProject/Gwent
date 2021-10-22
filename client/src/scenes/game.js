@@ -43,7 +43,7 @@ export default class Game extends Phaser.Scene {
     this.load.image("philippa_eilhart", "../assets/philippa_eilhart.png");
     this.load.image("siege_tower", "../assets/siege_tower.png");
     this.load.image("trebuchet", "../assets/trebuchet.png");
-    this.load.image("vernon_roche", "../assets/vernon_roche.png");git
+    this.load.image("vernon_roche", "../assets/vernon_roche.png");
   }
 
   create() {
