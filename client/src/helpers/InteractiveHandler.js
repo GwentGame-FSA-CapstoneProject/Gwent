@@ -68,6 +68,7 @@ export default class InteractiveHandler {
 
         scene.input.on("drop", function (pointer, gameObject, dropZone) {
             let gameHandler = scene.GameHandler;
+            scene.sound.play('draw')
             console.log('drop in interactiveHandler', gameHandler.isMyTurn, gameHandler.gameState, gameHandler.playerPassed)
             if (gameHandler.isMyTurn && gameHandler.gameState === 'Ready' && gameHandler.playerPassed === false){
                 let weather = ['biting_frost', 'clear_weather', 'impenetrable_fog', 'skellige_storm', 'torrential_rain'];

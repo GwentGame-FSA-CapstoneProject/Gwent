@@ -36,11 +36,13 @@ export default class Game extends Phaser.Scene {
     this.load.image("torrential_rain", "../assets/torrential_rain.png");
     this.load.image("skellige_storm", "../assets/skellige_storm.png");
     this.load.image("impenetrable_fog", "../assets/impenetrable_fog.png");
+    this.load.audio("draw",'../assets/draw.wav')
+    this.load.audio("soundtrack",'../assets/soundtrack.mp3')
   }
 
   create() {
     this.board = this.add.image(640, 600, "board");
-
+    this.sound.play('soundtrack',{volume: 0.25})
     this.DeckHandler = new DeckHandler(this);
     this.GameHandler = new GameHandler(this);
     this.SocketHandler = new SocketHandler(this);
