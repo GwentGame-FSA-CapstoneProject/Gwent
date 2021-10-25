@@ -188,9 +188,9 @@ export class VernonRoche extends Card {
   constructor(scene){
     super(scene);
     this.name = 'vernon_roche',
-    this.strength = 6,
+    this.strength = 10,
     this.type = 'Unit',
-    this.row = "Siege",
+    this.row = "Close",
     this.image = 'vernon_roche'
   }
 }

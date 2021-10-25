@@ -22,4 +22,4 @@ Frontend/Backend communication via web sockets
 
 ## Deployed Project
 
-The project is temporarily deployed on Heroku on https://gwintgameclone.herokuapp.com/
+The project is temporarily deployed on Heroku on https://thegwentgame.herokuapp.com
