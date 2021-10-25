@@ -18,6 +18,9 @@ export default class Game extends React.Component {
   shouldComponentUpdate() {
     return false;
   }
+  componentWillUnmount() {
+    window.location.reload();
+  }
   render() {
     return (
       <div className="gamewindow">
