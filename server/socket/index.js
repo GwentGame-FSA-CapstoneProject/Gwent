@@ -1,5 +1,6 @@
 var uuid = require("uuid-random");
 const shuffle = require("shuffle-array");
+const { Room, gameRoom, staticRooms } = require("./room");
 
 const {
   uniqueNamesGenerator,
@@ -49,11 +50,51 @@ const getRoomPlayers = (socketId) => {
 
 module.exports = io => {
   io.on("connection", function (socket) {
-    console.log("A user connected: " + socket.id);
+    console.log("Game " + socket.id);
+    // create 5 joinable rooms
+    socket.on("checkStaticRooms", () => {
+      socket.emit("staticRoomStatus", staticRooms);
+    });
+
+    socket.on("joinRoom", (roomID) => {
+      const roomKey = roomID.roomKey
+      if (Object.keys(gameRoom).includes(roomKey)) {
+        const roomInfo = gameRoom[roomKey];
+        if (roomInfo.playersNum < 2) {
+          socket.join(roomKey);
+          console.log(socket.id, 'joined room:', roomKey);
+
+          // update players info of the room player joined
+          roomInfo.addNewPlayer(socket.id);
+          console.log('new game rooms info:', gameRoom);
+
+          // send all info of that room to player
+          socket.emit("roomInfo", { roomInfo, roomKey });
+
+          // send player info to other players in that room
+          socket.to(roomKey).emit("newPlayerJoined", {
+            playerId: socket.id,
+            playerInfo: roomInfo.players[socket.id],
+          });
+
+          if (Object.keys(roomInfo.players).length === 1) {
+            console.log('hi')
+            io.to(socket.id).emit("firstTurn");
+          }
+
+        } else {
+          socket.emit("roomFull");
+        }
+      } else {
+        socket.emit("roomDoesNotExist");
+      }
+    });
+
+
     let currentRoom = gameRooms.get(roomId);
     let roomPlayers = currentRoom.players;
 
-    // console.log('currentRoom', currentRoom, currentRoom.players)
+    console.log('currentRoom', currentRoom, currentRoom.players)
 
     if (roomPlayers.length < 2) {
       socket.join(roomId);
@@ -77,7 +118,6 @@ module.exports = io => {
       hashMapSocketIdToRoomIdRelation.set(socket.id, roomId)
       io.to(roomId).emit("firstTurn");
     }
-
 
     socket.on("sendDeck", function (socketId) {
       let roomId = hashMapSocketIdToRoomIdRelation.get(socketId)
@@ -201,6 +241,7 @@ module.exports = io => {
       if (playerWhoWon.roundsWon === 2) {
         let roomId = hashMapSocketIdToRoomIdRelation.get(socketId)
         io.to(roomId).emit("endGame", socketId);
+
       }
     });
 

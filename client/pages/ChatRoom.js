@@ -5,6 +5,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import SendIcon from "@material-ui/icons/Send";
 import { Row, Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import background from "../public/assets/gwent_bg.png";
 
 import CurrentUserText from "../components/CurrentUserText";
 import OtherUserText from "../components/OtherUserText";
@@ -16,13 +17,14 @@ let styles = {
   div: {
     display: "flex",
     justifyContent: "space-around",
+    backgroundImage: `url(${background})`,
   },
   chatRoomContainer: {
     marginTop: 10,
   },
   header: {
     height: "7vh",
-    backgroundColor: "rgba(0, 0, 0, 0.25)",
+    backgroundColor: "rgba(0, 0, 0)",
     alignItems: "center",
     justifyContent: "center",
     display: "flex",
@@ -32,12 +34,14 @@ let styles = {
   },
   headerText: {
     fontSize: 20,
+    color: "white",
   },
   youAppearAsText: {
     fontSize: 14,
     marginTop: 5,
     display: "flex",
     flexDirection: "row",
+    color: "white",
   },
   usernameText: {
     fontWeight: "bold",
@@ -45,7 +49,7 @@ let styles = {
     marginRight: 3,
   },
   chatThread: {
-    backgroundColor: "rgba(227, 227, 227, 0.2)",
+    backgroundColor: "rgba(227, 227, 227, .4)",
     flex: 0,
     display: "flex",
     flexDirection: "column",
@@ -55,7 +59,7 @@ let styles = {
     alignSelf: "center",
     padding: 20,
     paddingBottom: 40,
-    border: "1px solid rgba(0, 0, 0, 0.2)",
+    border: "1px solid rgba(0, 0, 0)",
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8,
     marginBottom: 8,
@@ -63,6 +67,8 @@ let styles = {
   messageInputSection: {
     display: "flex",
     justifyContent: "flex-start",
+    backgroundColor: "rgba(164,150,148)",
+    marginBottom: 40,
   },
   messageTextField: {
     flex: 1,
@@ -178,9 +184,7 @@ class ChatRoom extends React.Component {
     let { chatRoomData, currentUsername } = this.state;
 
     return (
-      <div style={styles.div} style={{
-        backgroundImage: `url("https://i.redd.it/rqmwcqbtrxz51.png")`
-      }}>
+      <div style={styles.div}>
         <Container style={styles.chatRoomContainer}>
           <Container style={styles.header}>
             <Row style={styles.headerText}>Chat Room</Row>

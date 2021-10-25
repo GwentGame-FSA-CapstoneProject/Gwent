@@ -2,7 +2,9 @@ import React from "react";
 import playGame from "../src/scenes/game";
 import GameLost from "../src/scenes/endscreenlost";
 import GameWon from "../src/scenes/endscreenwon";
+import joinRoomScene from "../src/scenes/joinRoomScene";
 
+let game;
 export default class Game extends React.Component {
   componentDidMount() {
     const config = {
@@ -10,13 +12,18 @@ export default class Game extends React.Component {
       parent: "phaser-example",
       width: 1280,
       height: 1200,
-      scene: [playGame, GameLost, GameWon],
+      scene: [joinRoomScene, playGame, GameLost, GameWon],
     };
-    new Phaser.Game(config);
+    game = new Phaser.Game(config);
   }
   shouldComponentUpdate() {
     return false;
   }
+
+  componentWillUnmount() {
+    window.location.reload();
+  }
+
   render() {
     return (
       <div className="gamewindow">
