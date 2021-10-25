@@ -13,7 +13,7 @@ export default class SocketHandler {
         })
 
         scene.socket.on('opponentDisconnect', () => {
-                scene.scene.start('GameWonDisconnect');
+            scene.scene.start('GameWonDisconnect');
         })
 
         scene.socket.on('firstTurn', () => {
