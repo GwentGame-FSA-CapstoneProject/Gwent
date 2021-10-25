@@ -50,6 +50,7 @@ const getRoomPlayers = (socketId) => {
 module.exports = io => {
   io.on("connection", function (socket) {
     console.log("A user connected: " + socket.id);
+    console.log(roomId)
     let currentRoom = gameRooms.get(roomId);
     let roomPlayers = currentRoom.players;
 
@@ -160,7 +161,6 @@ module.exports = io => {
     });
 
     socket.on("cardPlayed", function (cardName, socketId) {
-      console.log('Server on cardPlayed', cardName, socketId)
       let roomId = hashMapSocketIdToRoomIdRelation.get(socketId)
       io.to(roomId).emit("cardPlayed", cardName, socketId);
       let currentRoom = gameRooms.get(roomId);
@@ -168,8 +168,15 @@ module.exports = io => {
     });
 
     socket.on("disconnect", function () {
+      console.log(socket.id)
+      let roomId = hashMapSocketIdToRoomIdRelation.get(socket.id)
+      io.to(roomId).emit('opponentDisconnect')
       console.log("A user disconnected: " + socket.id);
-      delete selectedPlayer;
+      const players = getRoomPlayers(socket.id);
+      // let selectedPlayer = players.find(player => player.id === socket.id);
+      // delete selectedPlayer;
+      gameRooms.set(roomId, roomInstance(roomId))
+      console.log(gameRooms)
     });
 
     socket.on("passTurn", function (socketId) {
