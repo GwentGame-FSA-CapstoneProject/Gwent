@@ -2,6 +2,10 @@
 
 Gwent is a multiplayer card game!
 
+## Deployed Project
+
+The project is temporarily deployed on Heroku on https://thegwentgame.herokuapp.com
+
 ## Application Architecture
 
 Backend runs in node, server is built using express.js
@@ -20,6 +24,4 @@ Frontend/Backend communication via web sockets
 | `npm run build` | Builds code bundle with production settings (minification, uglification, etc..) |
 | `npm run start:dev` | Rebuilds code bundle with dev settings on file save and restarts local server |
 
-## Deployed Project
 
-The project is temporarily deployed on Heroku on https://thegwentgame.herokuapp.com
