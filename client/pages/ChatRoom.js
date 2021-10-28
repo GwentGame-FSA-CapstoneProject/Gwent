@@ -5,7 +5,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import SendIcon from "@material-ui/icons/Send";
 import { Row, Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import background from "../public/assets/gwent_bg.png";
+import background from "../public/assets/gwentbg.png";
 
 import CurrentUserText from "../components/CurrentUserText";
 import OtherUserText from "../components/OtherUserText";
@@ -49,7 +49,7 @@ let styles = {
     marginRight: 3,
   },
   chatThread: {
-    backgroundColor: "rgba(227, 227, 227, .3)",
+    backgroundColor: "rgba(227, 227, 227, .4)",
     flex: 0,
     display: "flex",
     flexDirection: "column",
