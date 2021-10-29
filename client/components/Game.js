@@ -11,6 +11,10 @@ export default class Game extends React.Component {
       parent: "phaser-example",
       width: 1280,
       height: 1200,
+      scale: {
+        mode:Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+      },
       scene: [playGame, GameLost, GameWon, OpponentDisconnect],
     };
     new Phaser.Game(config);
