@@ -11,7 +11,7 @@ export default class UIHandler {
         }
 
         this.buildGameText = () => {
-            scene.waiting = scene.add.text(580, 500, "Wating for opponent...").setFontSize(32).setColor('Yellow');
+            scene.waiting = scene.add.text(580, 500, "Waiting for opponent...").setFontSize(32).setColor('Yellow');
 
             scene.passTurn = scene.add.text(1100, 590, "Pass Turn").setFontSize(25).setInteractive().setColor('#00ffff');
 
